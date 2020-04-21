@@ -1,0 +1,17 @@
+@import 'src/custom-theme.scss';
+
+.introduction-container {
+    background-color: mat-color($ner-annotation-suite-primary, lighter);
+    color: mat-color($ner-annotation-suite-primary, lighter-contrast);
+}
+
+.introduction-sub-container {
+    margin: 0 auto;
+    padding: 1rem 0;
+    max-width: 600px;
+    text-align: center;
+}
+
+.introduction-sub-container>h1 {
+    margin: 0;
+}

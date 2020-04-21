@@ -1,0 +1,9 @@
+.application-header {
+    height: 3rem;
+    padding: 0 3rem;
+}
+
+.application-container {
+    overflow: auto;
+    height: calc(100% - 3rem);
+}
