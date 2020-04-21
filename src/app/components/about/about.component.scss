@@ -1,8 +1,8 @@
 @import 'src/custom-theme.scss';
 
 .introduction-container {
-    background-color: mat-color($ner-annotation-suite-primary, lighter);
-    color: mat-color($ner-annotation-suite-primary, lighter-contrast);
+    background-color: mat-color($primary, lighter);
+    color: mat-color($primary, lighter-contrast);
 }
 
 .introduction-sub-container {
@@ -14,4 +14,9 @@
 
 .introduction-sub-container>h1 {
     margin: 0;
+}
+
+.information-container {
+    margin: 0 auto;
+    max-width: 1000px;
 }
