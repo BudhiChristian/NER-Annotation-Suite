@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
 body {
@@ -11,4 +11,18 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 
     overflow: hidden;
+
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        // border-radius: 0.2rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #aaa;
+        border-radius: 0.2rem;
+    }
 }

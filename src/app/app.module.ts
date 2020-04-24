@@ -7,16 +7,22 @@ import { AboutComponent } from './components/about/about.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { SetupComponent } from './components/annotation/setup/setup.component';
+import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
+import { ExportComponent } from './components/annotation/export/export.component';
 
-const MATERIAL_IMPORTS = [MatToolbarModule, MatButtonModule]
+const MATERIAL_IMPORTS = [MatToolbarModule, MatButtonModule, MatIconModule]
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     AnnotationComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    SetupComponent,
+    AnnotateComponent,
+    ExportComponent
   ],
   imports: [
     BrowserModule,

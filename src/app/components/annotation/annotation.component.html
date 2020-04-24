@@ -1,1 +1,8 @@
-<p>In Progress</p>
+<div class="stage-buttons">
+    <button mat-button routerLink='setup' routerLinkActive="active">Setup</button>
+    <span class="stage-placeholder"><mat-icon>chevron_right</mat-icon></span>
+    <button mat-button routerLink='annotate' routerLinkActive="active">Annotate</button>
+    <span class="stage-placeholder"><mat-icon>chevron_right</mat-icon></span>
+    <button mat-button routerLink='export' routerLinkActive="active">Export</button>
+</div>
+<router-outlet></router-outlet>

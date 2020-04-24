@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
+import { SetupComponent } from './components/annotation/setup/setup.component';
+import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
+import { ExportComponent } from './components/annotation/export/export.component';
 
 const routes: Routes = [
   {
@@ -13,8 +16,24 @@ const routes: Routes = [
     path: 'about',
     component: AboutComponent
   }, {
-    path: 'annotate',
-    component: AnnotationComponent
+    path: 'tool',
+    component: AnnotationComponent,
+    children: [
+      {
+        path: 'setup',
+        component: SetupComponent
+      },
+      {
+        path: 'annotate',
+        component: AnnotateComponent
+      }, {
+        path: 'export',
+        component: ExportComponent
+      }, {
+        path: '**',
+        redirectTo: 'setup'
+      }
+    ]
   }, {
     path: 'documentation',
     component: DocumentationComponent
