@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'src/custom-theme.scss';
 
 html,
 body {
@@ -25,4 +26,18 @@ body {
         background: #aaa;
         border-radius: 0.2rem;
     }
+}
+
+.mat-button {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+a:link {
+    color:  mat-color($primary, default);
+}
+
+a:visited {
+    color:  mat-color($primary, default);
 }
