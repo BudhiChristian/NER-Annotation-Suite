@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 
 @Component({
   selector: 'app-setup',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SetupComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private annotationService: AnnotationDataService
+  ) { }
 
   ngOnInit() {
   }

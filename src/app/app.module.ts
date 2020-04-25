@@ -11,6 +11,7 @@ import { MatToolbarModule, MatButtonModule, MatIconModule } from '@angular/mater
 import { SetupComponent } from './components/annotation/setup/setup.component';
 import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
 import { ExportComponent } from './components/annotation/export/export.component';
+import { AnnotationDataService } from './services/annotation-data.service';
 
 const MATERIAL_IMPORTS = [MatToolbarModule, MatButtonModule, MatIconModule]
 
@@ -30,7 +31,9 @@ const MATERIAL_IMPORTS = [MatToolbarModule, MatButtonModule, MatIconModule]
     BrowserAnimationsModule,
     ...MATERIAL_IMPORTS
   ],
-  providers: [],
+  providers: [
+    AnnotationDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
