@@ -1,0 +1,5 @@
+<div class="file-input-container">
+    <button mat-raised-button color='primary' (click)='inputFile.click();'>Choose File</button> 
+    <div *ngIf='fileName'>{{fileName | fakepath}}</div>
+    <input #inputFile hidden [(ngModel)]=fileName type='file' [accept]='accept' (change)="onFileChange($event)">
+</div>
