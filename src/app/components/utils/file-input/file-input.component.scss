@@ -1,0 +1,8 @@
+.file-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.file-input-container>*:not(:last-child) {
+    margin-right: 0.2rem;
+}

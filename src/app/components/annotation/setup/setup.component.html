@@ -1,0 +1,21 @@
+<div class="setup-container">
+    <h3>Select data input type.</h3>
+    <mat-form-field>
+        <mat-label>Input Type</mat-label>
+        <mat-select [(value)]="inputType">
+            <mat-option *ngFor="let option of INPUT_TYPES" [value]="option">{{option}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container [ngSwitch]='inputType'>
+        <!-- input options -->
+        <ng-container *ngSwitchCase="INPUT_TYPES[0]">
+            <app-txt-file  (onLineParsed)="lines = $event"></app-txt-file>
+            <div *ngIf="lines?.length > 0">
+                <!-- Token parse options -->
+            </div>
+        </ng-container>
+    </ng-container>
+
+    
+</div>

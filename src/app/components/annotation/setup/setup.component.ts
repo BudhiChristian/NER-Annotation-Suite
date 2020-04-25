@@ -7,12 +7,20 @@ import { AnnotationDataService } from 'src/app/services/annotation-data.service'
   styleUrls: ['./setup.component.scss']
 })
 export class SetupComponent implements OnInit {
+  public readonly INPUT_TYPES: string[] = ['TXT File']
 
   constructor(
     private annotationService: AnnotationDataService
   ) { }
 
   ngOnInit() {
+  }
+
+  set lines(val: string[]) {
+    this.annotationService.lines = val;
+  }
+  get lines(): string[] {
+    return this.annotationService.lines;
   }
 
 }
