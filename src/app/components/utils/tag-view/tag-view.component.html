@@ -1,13 +1,19 @@
 <div class="tag-view-container">
     <div class="tag-container">
-        <div *ngFor="let tag of entityTags" [style.backgroundColor]='tag.color' [style.color]='tag.contrastColor'>{{tag.name}}</div>
+        <div class="entity-tag" *ngFor="let tag of entityTags" [style.backgroundColor]='tag.color' [style.color]='tag.contrastColor'>{{tag.name}}</div>
+    </div>
+    <div class="tag-info-container">
+        Add new entity tags below.
     </div>
     <div class="tag-input-container">
         <mat-form-field>
             <mat-label>Entity Tag</mat-label>
             <input matInput [(ngModel)]='tagNameInput'>
         </mat-form-field>
-        <input type='color' [(ngModel)]='colorInput'>
+        <input #cInput hidden type='color' [(ngModel)]='colorInput'>
+        <button mat-mini-fab color="accent" (click)="cInput.click()">
+            <mat-icon [style.color]='colorInput'>palette</mat-icon>
+        </button>
         <button mat-raised-button color="accent" (click)="addEntity()">Add</button>
     </div>
 </div>

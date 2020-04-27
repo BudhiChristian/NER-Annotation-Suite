@@ -30,8 +30,9 @@ export class TagViewComponent implements OnInit {
   }
 
   addEntity() {
-    this.annotationService.addEntityTag(this.tagNameInput, this.colorInput);
+    this.annotationService.addEntityTag(this.tagNameInput.trim(), this.colorInput);
     this.setRandomColor();
+    this.tagNameInput = '';
   }
 
   get entityTags(): EntityTag[] {
