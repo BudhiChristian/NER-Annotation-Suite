@@ -28,7 +28,7 @@ export class AnnotationDataService {
   }
 
   removeEntityTag(id: number) {
-    this.__entityTags.filter(entity => entity.id !== id)
+    this.__entityTags = this.__entityTags.filter(entity => entity.id !== id)
   }
 
   editEntityTag(id: number, name: string, color: string) {

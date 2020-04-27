@@ -32,6 +32,7 @@ export class TagViewComponent implements OnInit {
   }
 
   addEntity() {
+    this.tagNameInput = this.tagNameInput.trim();
     if (this.entityTags.filter(e => e.name == this.tagNameInput).length > 0) {
       this.snackbar.open('Entity Tag Exists.', 'close', {
         duration: 3000
@@ -41,6 +42,9 @@ export class TagViewComponent implements OnInit {
     this.annotationService.addEntityTag(this.tagNameInput.trim(), this.colorInput);
     this.setRandomColor();
     this.tagNameInput = '';
+  }
+  removeEntity(entity: EntityTag) {
+    this.annotationService.removeEntityTag(entity.id)
   }
 
   get entityTags(): EntityTag[] {
