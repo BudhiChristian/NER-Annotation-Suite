@@ -7,7 +7,7 @@ import { AboutComponent } from './components/about/about.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
+import { MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
 import { SetupComponent } from './components/annotation/setup/setup.component';
 import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
 import { ExportComponent } from './components/annotation/export/export.component';
@@ -18,8 +18,9 @@ import { TxtFileComponent } from './components/annotation/setup/txt-file/txt-fil
 import { FakepathPipe } from './pipes/fakepath.pipe';
 import { FileInputComponent } from './components/utils/file-input/file-input.component';
 import { TagViewComponent } from './components/utils/tag-view/tag-view.component';
+import { EditTagComponent } from './components/utils/tag-view/edit-tag/edit-tag.component';
 
-const MATERIAL_IMPORTS = [ MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
+const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ const MATERIAL_IMPORTS = [ MatSnackBarModule, MatInputModule, MatToolbarModule, 
     TxtFileComponent,
     FakepathPipe,
     FileInputComponent,
-    TagViewComponent
+    TagViewComponent,
+    EditTagComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,9 @@ const MATERIAL_IMPORTS = [ MatSnackBarModule, MatInputModule, MatToolbarModule, 
   ],
   providers: [
     AnnotationDataService
+  ],
+  entryComponents: [
+    EditTagComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,14 @@
+.dialog-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.tag-input-container>*:not(:last-child) {
+    margin-right: 0.2rem;
+}

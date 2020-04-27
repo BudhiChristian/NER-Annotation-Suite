@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { EditTagComponent } from './edit-tag/edit-tag.component';
 
 @Component({
   selector: 'app-tag-view',
@@ -9,12 +10,13 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./tag-view.component.scss']
 })
 export class TagViewComponent implements OnInit {
-  colorInput: string = '#ffffff';
   tagNameInput: string = '';
+  colorInput: string = '#ffffff';
 
   constructor(
     private annotationService: AnnotationDataService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -43,8 +45,23 @@ export class TagViewComponent implements OnInit {
     this.setRandomColor();
     this.tagNameInput = '';
   }
+  
   removeEntity(entity: EntityTag) {
     this.annotationService.removeEntityTag(entity.id)
+  }
+
+  editEntity(entity: EntityTag) {
+    this.dialog.open(EditTagComponent, {
+      data: entity,
+      autoFocus: false,
+      restoreFocus: false,
+      width: '550px'
+    }).afterClosed().subscribe(res => {
+      if(res) {
+        entity.name = res.tagNameInput.trim()
+        entity.color = res.colorInput
+      }
+    })
   }
 
   get entityTags(): EntityTag[] {
