@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { TxtFileComponent } from './components/annotation/setup/txt-file/txt-file.component';
 import { FakepathPipe } from './pipes/fakepath.pipe';
 import { FileInputComponent } from './components/utils/file-input/file-input.component';
+import { TagViewComponent } from './components/utils/tag-view/tag-view.component';
 
 const MATERIAL_IMPORTS = [ MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -31,7 +32,8 @@ const MATERIAL_IMPORTS = [ MatInputModule, MatToolbarModule, MatButtonModule, Ma
     ExportComponent,
     TxtFileComponent,
     FakepathPipe,
-    FileInputComponent
+    FileInputComponent,
+    TagViewComponent
   ],
   imports: [
     BrowserModule,
