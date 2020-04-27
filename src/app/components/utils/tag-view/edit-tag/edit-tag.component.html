@@ -1,0 +1,19 @@
+<div mat-dialog-title class="dialog-title">
+    <span>
+        Edit Entity Tag
+    </span>
+    <button mat-icon-button mat-dialog-close title='close modal'>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div mat-mat-dialog-content class='tag-input-container'>
+    <mat-form-field color='primary'>
+        <mat-label>Entity Tag</mat-label>
+        <input matInput [(ngModel)]='tagNameInput' autocomplete='off'>
+    </mat-form-field>
+    <input #cInput hidden type='color' [(ngModel)]='colorInput'>
+    <button mat-mini-fab color='accent' (click)='cInput.click()' title='change tag color'>
+        <mat-icon [style.color]='colorInput'>palette</mat-icon>
+    </button>
+    <button mat-raised-button color='primary' [disabled]='!tagNameInput' title='add entity tag' (click)='send()'>Save</button>
+</div>

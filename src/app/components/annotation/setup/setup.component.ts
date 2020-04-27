@@ -7,8 +7,8 @@ import { AnnotationDataService } from 'src/app/services/annotation-data.service'
   styleUrls: ['./setup.component.scss']
 })
 export class SetupComponent implements OnInit {
-  public readonly INPUT_TYPES: string[] = ['TXT File'];
-  public inputType: string = '';
+  public readonly INPUT_TYPES: string[] = ['Start Empty', 'TXT File'];
+  public inputType: string = this.INPUT_TYPES[0];
 
   constructor(
     private annotationService: AnnotationDataService

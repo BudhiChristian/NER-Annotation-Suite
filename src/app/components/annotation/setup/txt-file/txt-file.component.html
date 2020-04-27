@@ -3,7 +3,7 @@
         <h3>Select a File</h3>
         <app-file-input accept='.txt' (onFileSelect)="readFile($event)"></app-file-input>
     </div>
-    <div *ngIf="rawText">
+    <div>
         <h3>Choose Sentence Delimiter</h3>
         <mat-form-field>
             <mat-label>Sentence Delimiter</mat-label>
@@ -14,7 +14,7 @@
         </mat-form-field>
     </div>
 </div>
-<div *ngIf="rawText && delimiter" class="txt-parse-container">
-    <button mat-raised-button color="primary" (click)="parseText()">Parse Text</button>
+<div class="txt-parse-container">
+    <button mat-raised-button color="primary" [disabled]='!rawText || !delimiter' (click)="parseText()">Parse Text</button>
     <p *ngIf="parseMessage">{{parseMessage}}</p>
 </div>

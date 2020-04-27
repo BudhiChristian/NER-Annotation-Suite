@@ -1,15 +1,18 @@
 <div class="setup-container">
     <h3>Select Data Input Type</h3>
+    <p>Additional sentences can also be added in the next screen.</p>
     <mat-form-field>
         <mat-label>Input Type</mat-label>
         <mat-select [(value)]="inputType">
             <mat-option *ngFor="let option of INPUT_TYPES" [value]="option">{{option}}</mat-option>
         </mat-select>
     </mat-form-field>
-
     <ng-container [ngSwitch]='inputType'>
         <!-- input options -->
-        <ng-container *ngSwitchCase="INPUT_TYPES[0]">
+        <ng-container *ngSwitchCase="INPUT_TYPES[1]">
+            <p>
+                Text must be parsed to begin annotation.
+            </p>
             <app-txt-file  (onLineParsed)="lines = $event"></app-txt-file>
             <div *ngIf="lines?.length > 0">
                 <!-- Token parse options -->
@@ -18,7 +21,11 @@
     </ng-container>
 
     <h3>Add Tags</h3>
-    <p>Additional tags can be added while annotating.</p>
+    <p>Additional tags can also be added in the next screen.</p>
     <app-tag-view></app-tag-view>
+    
+    <div class='begin-container'>
+        <button mat-raised-button color='primary' [disabled]='inputType != INPUT_TYPES[0] && lines.length < 1' routerLink='/tool/annotate'>Begin Annotation</button>
+    </div>
     
 </div>

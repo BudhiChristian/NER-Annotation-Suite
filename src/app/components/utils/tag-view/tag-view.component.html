@@ -1,19 +1,26 @@
-<div class="tag-view-container">
-    <div class="tag-container">
-        <div class="entity-tag" *ngFor="let tag of entityTags" [style.backgroundColor]='tag.color' [style.color]='tag.contrastColor'>{{tag.name}}</div>
+<div class='tag-view-container'>
+    <div *ngIf='entityTags.length > 0; else isEmpty' class='tag-container'>
+        <div class='entity-tag' *ngFor='let tag of entityTags' [style.backgroundColor]='tag.color'
+            [style.color]='tag.contrastColor'>
+            <p>{{tag.name}}</p>
+            <button mat-icon-button (click)='editEntity(tag)' title='edit entity tag'><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button (click)='removeEntity(tag)' title='delete entity tag'><mat-icon>delete</mat-icon></button>
+        </div>
     </div>
-    <div class="tag-info-container">
-        Add new entity tags below.
-    </div>
-    <div class="tag-input-container">
-        <mat-form-field>
+    <ng-template #isEmpty>
+        <div class='tag-info-container'>
+            Add new entity tags below.
+        </div>
+    </ng-template>
+    <div class='tag-input-container'>
+        <mat-form-field color='primary'>
             <mat-label>Entity Tag</mat-label>
-            <input matInput [(ngModel)]='tagNameInput'>
+            <input matInput [(ngModel)]='tagNameInput' autocomplete='off'>
         </mat-form-field>
         <input #cInput hidden type='color' [(ngModel)]='colorInput'>
-        <button mat-mini-fab color="accent" (click)="cInput.click()">
+        <button mat-mini-fab color='accent' (click)='cInput.click()' title='change tag color'>
             <mat-icon [style.color]='colorInput'>palette</mat-icon>
         </button>
-        <button mat-raised-button color="accent" (click)="addEntity()">Add</button>
+        <button mat-raised-button color='primary' [disabled]='!tagNameInput' (click)='addEntity()' title='add entity tag'>Add</button>
     </div>
 </div>
