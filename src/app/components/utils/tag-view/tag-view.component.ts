@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-tag-view',
@@ -12,7 +13,8 @@ export class TagViewComponent implements OnInit {
   tagNameInput: string = '';
 
   constructor(
-    private annotationService: AnnotationDataService
+    private annotationService: AnnotationDataService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,12 @@ export class TagViewComponent implements OnInit {
   }
 
   addEntity() {
+    if (this.entityTags.filter(e => e.name == this.tagNameInput).length > 0) {
+      this.snackbar.open('Entity Tag Exists.', 'close', {
+        duration: 3000
+      })
+      return;
+    }
     this.annotationService.addEntityTag(this.tagNameInput.trim(), this.colorInput);
     this.setRandomColor();
     this.tagNameInput = '';
