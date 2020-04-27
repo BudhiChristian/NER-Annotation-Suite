@@ -15,7 +15,7 @@ $border-radius: 0.5rem;
 }
 
 .tag-view-container>* {
-    padding: 0.5em;
+    // padding: 0.5rem;
 }
 
 .tag-input-container {
@@ -27,4 +27,19 @@ $border-radius: 0.5rem;
     color: mat-color($primary, lighter-contrast);
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
+
+    padding: 0.5rem 0.5rem 0;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.5rem 0.25rem 0;
+}
+
+.tag-container>* {
+    margin: 0 0.25rem 0.5rem;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    box-shadow: 0px 1px 3px #00000099;
 }

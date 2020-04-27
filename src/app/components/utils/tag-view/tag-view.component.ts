@@ -16,10 +16,22 @@ export class TagViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setRandomColor();
+  }
+
+  setRandomColor() {
+    let r = Math.floor(Math.random()*255).toString(16)
+    r = r.length < 2 ? `0${r}` : r
+    let g = Math.floor(Math.random()*255).toString(16)
+    g = g.length < 2 ? `0${g}` : g
+    let b = Math.floor(Math.random()*255).toString(16)
+    b = b.length < 2 ? `0${b}` : b
+    this.colorInput = `#${r}${g}${b}`;
   }
 
   addEntity() {
     this.annotationService.addEntityTag(this.tagNameInput, this.colorInput);
+    this.setRandomColor();
   }
 
   get entityTags(): EntityTag[] {
