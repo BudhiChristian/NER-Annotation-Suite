@@ -1,0 +1,30 @@
+@import 'src/custom-theme.scss';
+
+
+$border-radius: 0.5rem;
+
+.tag-view-container {
+    background-color: mat-color($accent, lighter);
+    color: mat-color($accent, lighter-contrast);
+    box-shadow: 0px 1px 3px #00000099 inset;
+
+    border-radius: $border-radius;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-view-container>* {
+    padding: 0.5em;
+}
+
+.tag-input-container {
+    display: flex;
+    align-items: center;
+
+    border-top: 1px solid #ccc;
+    background-color: mat-color($primary, lighter);
+    color: mat-color($primary, lighter-contrast);
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}

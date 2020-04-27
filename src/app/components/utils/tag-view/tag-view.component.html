@@ -1,0 +1,13 @@
+<div class="tag-view-container">
+    <div>
+        <div *ngFor="let tag of entityTags" [style.backgroundColor]='tag.color' [style.color]='tag.contrastColor'>{{tag.name}}</div>
+    </div>
+    <div class="tag-input-container">
+        <mat-form-field>
+            <mat-label>Entity Tag</mat-label>
+            <input matInput [(ngModel)]='tagNameInput'>
+        </mat-form-field>
+        <input type='color' [(ngModel)]='colorInput'>
+        <button mat-raised-button color="accent" (click)="addEntity()">Add</button>
+    </div>
+</div>
