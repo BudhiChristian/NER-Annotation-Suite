@@ -6,6 +6,7 @@ import { DocumentationComponent } from './components/documentation/documentation
 import { SetupComponent } from './components/annotation/setup/setup.component';
 import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
 import { ExportComponent } from './components/annotation/export/export.component';
+import { VolatileGuard } from './guards/volatile.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     children: [
       {
         path: 'setup',
-        component: SetupComponent
+        component: SetupComponent,
+        canDeactivate: [VolatileGuard]
       },
       {
         path: 'annotate',

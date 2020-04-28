@@ -19,6 +19,8 @@ import { FakepathPipe } from './pipes/fakepath.pipe';
 import { FileInputComponent } from './components/utils/file-input/file-input.component';
 import { TagViewComponent } from './components/utils/tag-view/tag-view.component';
 import { EditTagComponent } from './components/utils/tag-view/edit-tag/edit-tag.component';
+import { ConfirmationModalComponent } from './components/utils/confirmation-modal/confirmation-modal.component';
+import { VolatileGuard } from './guards/volatile.guard';
 
 const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -35,7 +37,8 @@ const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, M
     FakepathPipe,
     FileInputComponent,
     TagViewComponent,
-    EditTagComponent
+    EditTagComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +49,12 @@ const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, M
     ...MATERIAL_IMPORTS
   ],
   providers: [
-    AnnotationDataService
+    AnnotationDataService,
+    VolatileGuard
   ],
   entryComponents: [
-    EditTagComponent
+    EditTagComponent,
+    ConfirmationModalComponent
   ],
   bootstrap: [AppComponent]
 })
