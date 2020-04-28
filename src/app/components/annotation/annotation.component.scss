@@ -5,9 +5,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 36px;
+    background-color: mat-color($accent, lighter);
 }
 
 .active {
     text-decoration: underline;
     font-weight: bold;
+}
+
+.annotation-content {
+    position: relative;
+    height: calc(100% - 36px);
+    overflow: auto;
 }

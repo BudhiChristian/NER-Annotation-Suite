@@ -6,10 +6,11 @@
     top: 0;
     left: 0;
     box-shadow: 0px 1px 8px #00000099;
+    z-index: 999999;
 }
 
 .application-container {
-    overflow: auto;
-    margin-top: 3rem;
-    height: calc(100% - 3rem)
+    top: 3rem;
+    position: relative;
+    height: calc(100% - 3rem);
 }
