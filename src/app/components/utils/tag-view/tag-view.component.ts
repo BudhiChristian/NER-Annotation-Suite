@@ -35,15 +35,19 @@ export class TagViewComponent implements OnInit {
 
   addEntity() {
     this.tagNameInput = this.tagNameInput.trim();
-    if (this.entityTags.filter(e => e.name == this.tagNameInput).length > 0) {
-      this.snackbar.open('Entity Tag Exists.', 'close', {
+    if (!this.tagNameInput) {
+      this.snackbar.open('Entity Tag name cannot be empty.', 'close', {
         duration: 3000
       })
-      return;
+    } else if (this.entityTags.filter(e => e.name == this.tagNameInput).length > 0) {
+      this.snackbar.open('Entity Tag already exists.', 'close', {
+        duration: 3000
+      })
+    } else {
+      this.annotationService.addEntityTag(this.tagNameInput.trim(), this.colorInput);
+      this.setRandomColor();
+      this.tagNameInput = '';
     }
-    this.annotationService.addEntityTag(this.tagNameInput.trim(), this.colorInput);
-    this.setRandomColor();
-    this.tagNameInput = '';
   }
   
   removeEntity(entity: EntityTag) {

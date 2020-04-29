@@ -4,12 +4,9 @@
     
     align-items: stretch;
     margin: 0 auto;
-    max-width: 1600px;
+    max-width: 2000px;
     overflow-y: auto;
     overflow-x: none;
-}
-.annotation-suite-container>*:not(:last-child) {
-    border-right: 1px solid #ccc;
 }
 
 .sentence-view-container,.entity-view-container {
@@ -17,7 +14,7 @@
 
     flex: 1 1 0;
     min-width: 320px;
-    padding: 0 0.2rem;
+    padding: 0 0.2rem 0.4rem;
 }
 
 .sentence-view-container h3,.entity-view-container h3 {

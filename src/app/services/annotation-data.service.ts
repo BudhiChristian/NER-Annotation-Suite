@@ -6,16 +6,25 @@ import { TaggedData } from '../domain/tagged-data.domain';
   providedIn: 'root'
 })
 export class AnnotationDataService {
+  private __setupTouched: boolean = false;
   private __lines: string[] = [];
-  data: any[] = [];
   private __entityTags: EntityTag[] = [];
   private __taggedData: TaggedData[] = [];
 
   constructor() { }
+  reset() {
+    this.__setupTouched = false;
+    this.__lines = [];
+    this.__entityTags = [];
+    this.__taggedData = [];
+  }
 
-  set lines(val: string[]) {
-    this.__lines = val;
-    this.__taggedData = val.map(line => { return new TaggedData(line)})
+  get setupTouched(): boolean {
+    return this.__setupTouched;
+  }
+
+  touchSetup() {
+    this.__setupTouched = true;
   }
 
   getTaggedData(showTouched?: boolean): TaggedData[] {
@@ -25,8 +34,18 @@ export class AnnotationDataService {
     return this.__taggedData.filter(d => !d.touched);
   }
 
+  set lines(val: string[]) {
+    this.__lines = val;
+    this.__taggedData = val.map(line => new TaggedData(line));
+  }
+
   get lines(): string[] {
     return this.__lines
+  }
+
+  addLine(line: string) {
+    this.__lines.push(line);
+    this.__taggedData.push(new TaggedData(line));
   }
 
   get entityTags(): EntityTag[] {
