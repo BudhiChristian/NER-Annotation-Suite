@@ -7,6 +7,7 @@ import { SetupComponent } from './components/annotation/setup/setup.component';
 import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
 import { ExportComponent } from './components/annotation/export/export.component';
 import { VolatileGuard } from './guards/volatile.guard';
+import { RouteGuard } from './guards/route.guard';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
       {
         path: 'annotate',
         component: AnnotateComponent,
-        canDeactivate: [VolatileGuard]
+        canDeactivate: [VolatileGuard],
+        canActivate: [RouteGuard]
       }, {
         path: 'export',
         component: ExportComponent

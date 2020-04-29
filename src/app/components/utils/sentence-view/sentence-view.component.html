@@ -1,6 +1,17 @@
 <div class='sentence-view-container'>
     <div class='view-control-container'>
-        <button mat-raised-button color='primary'>Add</button>
+        <div>
+            <button mat-mini-fab color='primary' [disabled]='!newSentence' (click)='addSentence()' title='Add sentence to queue.'><mat-icon>add</mat-icon></button>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Sentence Input</mat-label>
+            <textarea matInput cdkTextareaAutosize 
+            [(ngModel)]='newSentence'
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="4"
+            cdkAutosizeMaxRows="4"></textarea>
+            <mat-hint>Sentences are added to end of queue.</mat-hint>
+        </mat-form-field>
     </div>
     <div class='sentences-container'>
         <div *ngIf="data.length > 0; else emptyPlaceholder">
@@ -8,7 +19,7 @@
                 {{line.sentence}}
             </div>
             <div class='remaining-indicator' *ngIf="remaining > 0">
-                {{remaining}} not shown.
+                {{remaining}} more not shown.
             </div>
         </div>
         <ng-template #emptyPlaceholder>

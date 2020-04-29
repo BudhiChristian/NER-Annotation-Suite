@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-sentence-view',
@@ -9,17 +10,35 @@ import { TaggedData } from 'src/app/domain/tagged-data.domain';
 })
 export class SentenceViewComponent implements OnInit {
   @Output('selectedData') selectData: EventEmitter<TaggedData> = new EventEmitter<TaggedData>();
-
+  remaining: number = 0;
+  newSentence: string = '';
   constructor(
-    private annotationService: AnnotationDataService
+    private annotationService: AnnotationDataService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
   }
-  remaining: number = 0;
+
   get data(): TaggedData[] {
     let fullData = this.annotationService.getTaggedData()
-    this.remaining = Math.max(fullData.length-1, 0);
-    return fullData.slice(0, 100);
+    this.remaining = Math.max(fullData.length - 10, 0);
+    return fullData.slice(0, 10);
+  }
+
+  addSentence() {
+    this.newSentence = this.newSentence.trim()
+    if (!this.newSentence) {
+      this.snackbar.open('Sentence cannot be empty.', 'close', {
+        duration: 3000
+      })
+    } else if (this.annotationService.lines.includes(this.newSentence)) {
+      this.snackbar.open('Sentence already exists in the training set.', 'close', {
+        duration: 3000
+      })
+    } else {
+      this.annotationService.addLine(this.newSentence);
+      this.newSentence = '';
+    }
   }
 }

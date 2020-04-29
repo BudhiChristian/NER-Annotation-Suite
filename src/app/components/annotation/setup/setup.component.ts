@@ -20,6 +20,7 @@ export class SetupComponent extends VolatileComponent implements OnInit {
   ) {
     super(__dialog, 'Changes Detected',
       'Changes have been detected in the setup form. Leaving this page will result in lost work. Do you wish to continue?');
+    this.annotationService.touchSetup();
   }
 
   protected hasUnsavedchanges(nextState: RouterStateSnapshot): UnsavedChange {
