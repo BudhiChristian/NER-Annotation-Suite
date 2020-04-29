@@ -1,7 +1,47 @@
 <div class='annotation-tool-container'>
-    <div *ngIf='currentData'>
-        <div id='base-string' (mouseup)='getSelected()'>
+    <div class='text-highlight-container'>
+        <div *ngIf='currentData; else noSentence' id='base-string' (mouseup)='getSelected()'>
             <span id='char-{{index}}' *ngFor='let c of sentenceToList(currentData.sentence); let index = index'>{{c}}</span>
         </div>
+        <ng-template #noSentence>
+            <div style='text-align: center;'>
+                No sentences queued for annotation.
+            </div>
+        </ng-template>
+    </div>
+    <div *ngIf='start && end; else notSelected'>
+        <h4>Selected Substring</h4>
+        <div>
+            "{{sub}}"
+        </div>
+        <div class='selected-details-container'>
+            <div>
+                <h4>Start Index</h4>
+                {{start}}
+            </div>
+            <div>
+                <h4>End Index</h4>
+                {{end}}
+            </div>
+            <div>
+                <h4>Entity Tag</h4>
+                <mat-form-field>
+                    <mat-label>Select Entity Tag</mat-label>
+                    <mat-select [(value)]='entityTag'>
+                        <mat-option *ngFor='let tag of entityTags' [value]='tag'>{{tag.name}}</mat-option>
+                    </mat-select>
+                    <mat-hint>More tags can be added to the right.</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class='align-center'>
+            <button mat-raised-button color='primary' [disabled]='!entityTag' (click)='addEntity()'>Save Tagged Entity</button>
+        </div>
+    </div>
+    <ng-template #notSelected>
+        <p class='align-center'>Highlight text above to select</p>
+    </ng-template>
+    <div *ngIf='currentData'>
+        <div>{{currentData?.entities | json}}</div>
     </div>
 </div>
