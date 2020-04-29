@@ -27,7 +27,8 @@ const routes: Routes = [
       },
       {
         path: 'annotate',
-        component: AnnotateComponent
+        component: AnnotateComponent,
+        canDeactivate: [VolatileGuard]
       }, {
         path: 'export',
         component: ExportComponent

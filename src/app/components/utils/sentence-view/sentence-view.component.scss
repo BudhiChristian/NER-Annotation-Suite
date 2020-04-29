@@ -5,7 +5,12 @@ $general-padding: 0.5rem;
 $general-box-shadow: 0px 1px 3px #00000099;
 
 .sentence-view-container {
+    border-radius: $border-radius;
+
+    display: flex;
+    flex-direction: column;
 }
+
 .view-control-container {
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
