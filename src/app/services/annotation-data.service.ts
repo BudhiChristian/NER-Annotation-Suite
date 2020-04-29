@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityTag } from '../domain/entity-tag.domain';
+import { TaggedData } from '../domain/tagged-data.domain';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,22 @@ export class AnnotationDataService {
   private __lines: string[] = [];
   data: any[] = [];
   private __entityTags: EntityTag[] = [];
+  private __taggedData: TaggedData[] = [];
 
   constructor() { }
 
   set lines(val: string[]) {
     this.__lines = val;
-    // TODO: parse tokens
+    this.__taggedData = val.map(line => { return new TaggedData(line)})
   }
+
+  getTaggedData(showTouched?: boolean): TaggedData[] {
+    if (showTouched) {
+      return this.__taggedData;
+    }
+    return this.__taggedData.filter(d => !d.touched);
+  }
+
   get lines(): string[] {
     return this.__lines
   }

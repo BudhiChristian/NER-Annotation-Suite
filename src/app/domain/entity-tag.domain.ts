@@ -4,7 +4,7 @@ export class EntityTag {
     public name: string;
     private __color: string;
     private __contrastColor: string;
-    constructor(name: string, color: string) {
+    public constructor(name: string, color: string) {
         EntityTag.count ++;
         this.id = EntityTag.count
         this.name = name;

@@ -1,0 +1,18 @@
+<div class='sentence-view-container'>
+    <div class='view-control-container'>
+        <button mat-raised-button color='primary'>Add</button>
+    </div>
+    <div class='sentences-container'>
+        <div *ngIf="data.length > 0; else emptyPlaceholder">
+            <div class='sentence-view' *ngFor='let line of data;' [title]='line.sentence'>
+                {{line.sentence}}
+            </div>
+            <div class='remaining-indicator' *ngIf="remaining > 0">
+                {{remaining}} not shown.
+            </div>
+        </div>
+        <ng-template #emptyPlaceholder>
+            <p>No sentences left for review, add more above.</p>
+        </ng-template>
+    </div>
+</div>
