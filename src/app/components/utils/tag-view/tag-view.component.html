@@ -2,7 +2,7 @@
     <div *ngIf='entityTags.length > 0; else isEmpty' class='tag-container'>
         <div class='entity-tag' *ngFor='let tag of entityTags' [style.backgroundColor]='tag.color'
             [style.color]='tag.contrastColor'>
-            <p>{{tag.name}}</p>
+            <p [title]='tag.name'>{{tag.name}}</p>
             <button mat-icon-button (click)='editEntity(tag)' title='edit entity tag'><mat-icon>edit</mat-icon></button>
             <button mat-icon-button (click)='removeEntity(tag)' title='delete entity tag'><mat-icon>delete</mat-icon></button>
         </div>

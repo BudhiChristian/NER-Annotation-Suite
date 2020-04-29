@@ -21,6 +21,7 @@ import { TagViewComponent } from './components/utils/tag-view/tag-view.component
 import { EditTagComponent } from './components/utils/tag-view/edit-tag/edit-tag.component';
 import { ConfirmationModalComponent } from './components/utils/confirmation-modal/confirmation-modal.component';
 import { VolatileGuard } from './guards/volatile.guard';
+import { SentenceViewComponent } from './components/utils/sentence-view/sentence-view.component';
 
 const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -38,7 +39,8 @@ const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, M
     FileInputComponent,
     TagViewComponent,
     EditTagComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    SentenceViewComponent
   ],
   imports: [
     BrowserModule,
