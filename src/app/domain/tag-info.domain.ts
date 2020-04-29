@@ -1,14 +1,16 @@
+import { EntityTag } from './entity-tag.domain';
+
 export class TagInfo {
     private static count: number = 0;
     private __id: number;
 
-    private __text: string;
+    private __tag: EntityTag;
     private __start: number;
     private __end: number;
-    public constructor(text: string, start: number, end: number) {
+    public constructor(text: EntityTag, start: number, end: number) {
         TagInfo.count++;
         this.__id = TagInfo.count;
-        this.__text = text;
+        this.__tag = text;
         this.__start = start;
         this.__end = end;
     }
@@ -17,8 +19,8 @@ export class TagInfo {
         return this.__id;
     }
 
-    get text(): string {
-        return this.__text;
+    get tag(): EntityTag {
+        return this.__tag;
     }
 
     get start(): number {

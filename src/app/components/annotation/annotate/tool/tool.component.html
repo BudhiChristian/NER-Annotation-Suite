@@ -1,0 +1,7 @@
+<div class='annotation-tool-container'>
+    <div *ngIf='currentData'>
+        <div id='base-string' (mouseup)='getSelected()'>
+            <span id='char-{{index}}' *ngFor='let c of sentenceToList(currentData.sentence); let index = index'>{{c}}</span>
+        </div>
+    </div>
+</div>

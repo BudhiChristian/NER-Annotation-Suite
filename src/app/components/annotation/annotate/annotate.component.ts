@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
+import { TaggedData } from 'src/app/domain/tagged-data.domain';
 
 @Component({
   selector: 'app-annotate',
@@ -10,6 +11,7 @@ import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
   styleUrls: ['./annotate.component.scss']
 })
 export class AnnotateComponent extends VolatileComponent implements OnInit {
+  currentData: TaggedData;
   
   constructor(
     protected __dialog: MatDialog
