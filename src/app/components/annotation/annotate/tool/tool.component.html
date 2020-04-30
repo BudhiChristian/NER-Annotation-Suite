@@ -43,6 +43,6 @@
     </ng-template>
     <div *ngIf='currentData?.entities?.length > 0'>
         <h3 class='align-center'>Tagged Entities</h3>
-        <app-tagged-entity-view [entities]='currentData.entities'></app-tagged-entity-view>
+        <app-tagged-entity-view [currentData]='currentData'></app-tagged-entity-view>
     </div>
 </div>

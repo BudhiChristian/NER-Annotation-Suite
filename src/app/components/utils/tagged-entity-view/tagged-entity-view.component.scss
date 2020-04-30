@@ -1,4 +1,10 @@
 .entity-table {
     width: 100%;
-    text-align: center !important;
+}
+
+td.mat-cell {
+    padding: 0 0.5rem;
+}
+td.mat-cell:first-of-type {
+    width: 100%;
 }
