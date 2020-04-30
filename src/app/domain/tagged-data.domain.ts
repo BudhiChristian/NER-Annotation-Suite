@@ -55,4 +55,17 @@ export class TaggedData {
         }
         return undefined
     }
+
+    geStyleDict() {
+        let dict = []
+        for(let i = 0; i < this.__sentence.length; i++) {
+            let e = this.__entities.find(entity => entity.start <= i && entity.end >= i)
+            
+            dict.push({
+                'background-color': e ? e.tag.color : '',
+                'color': e ? e.tag.contrastColor : ''
+            });
+        }
+        return dict;
+    }
 }

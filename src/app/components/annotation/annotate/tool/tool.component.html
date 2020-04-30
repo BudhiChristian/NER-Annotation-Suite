@@ -1,7 +1,8 @@
 <div class='annotation-tool-container'>
     <div class='text-highlight-container'>
         <div *ngIf='currentData; else noSentence' id='base-string' (mouseup)='getSelected()'>
-            <span id='char-{{index}}' *ngFor='let c of sentenceToList(currentData.sentence); let index = index'>{{c}}</span>
+            <span id='char-{{index}}' *ngFor='let c of sentenceToList(currentData.sentence); let index = index'
+            [ngStyle]='styles[index]'>{{c}}</span>
         </div>
         <ng-template #noSentence>
             <div style='text-align: center;'>
@@ -43,6 +44,6 @@
     </div>
     <div *ngIf='currentData?.entities?.length > 0'>
         <h3 class='align-center'>Tagged Entities</h3>
-        <app-tagged-entity-view [currentData]='currentData'></app-tagged-entity-view>
+        <app-tagged-entity-view [currentData]='currentData' (onDataChanged)='setStyle()'></app-tagged-entity-view>
     </div>
 </div>

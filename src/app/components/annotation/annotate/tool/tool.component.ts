@@ -2,8 +2,6 @@ import { Component, OnInit, Input, IterableDiffers } from '@angular/core';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tool',
@@ -15,6 +13,7 @@ export class ToolComponent implements OnInit {
   end: number = NaN;
   sub: string = undefined;
   entityTag: EntityTag;
+  styles: any [] = [];
 
   constructor(
     private annotationService: AnnotationDataService
@@ -24,7 +23,13 @@ export class ToolComponent implements OnInit {
     console.log('change')
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.setStyle();
+  }
+
+  setStyle() {
+    this.styles = this.currentData ? this.currentData.geStyleDict()  : []
+  }
 
   get entityTags(): EntityTag[] {
     return this.annotationService.entityTags;
@@ -44,6 +49,7 @@ export class ToolComponent implements OnInit {
     this.end = NaN;
     this.sub = '';
     this.entityTag = undefined;
+    this.setStyle();
   }
 
   get hasSelected(): boolean {
