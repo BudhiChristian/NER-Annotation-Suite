@@ -61,7 +61,11 @@ export class ToolComponent implements OnInit {
 
 
   sentenceToList(sentence: string)  {
-    return [...sentence]
+    let arr = []
+    for(let i = 0; i < sentence.length; i++) {
+      arr.push(sentence.charAt(i))
+    }
+    return arr;
   }
 
 }
