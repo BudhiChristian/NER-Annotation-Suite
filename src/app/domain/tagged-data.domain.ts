@@ -48,5 +48,11 @@ export class TaggedData {
         this.__entities = this.__entities.filter(entity => entity.id != id);
     }
 
-
+    getCharacterIndexEntity(idx): EntityTag {
+        let matches = this.__entities.filter(entity => entity.start <= idx && entity.end >= idx)
+        if (matches.length > 0) {
+            return matches[0].tag
+        }
+        return undefined
+    }
 }

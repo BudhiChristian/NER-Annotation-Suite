@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, IterableDiffers } from '@angular/core';
+import { Component, OnInit, Input, IterableDiffers, Output, EventEmitter } from '@angular/core';
 import { TagInfo } from 'src/app/domain/tag-info.domain';
 import { MatTableDataSource } from '@angular/material';
-import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
 
 @Component({
@@ -11,6 +10,7 @@ import { TaggedData } from 'src/app/domain/tagged-data.domain';
 })
 export class TaggedEntityViewComponent implements OnInit {
   @Input() currentData: TaggedData;
+  @Output() onDataChanged: EventEmitter<void> = new EventEmitter<void>();
 
   displayedColumns: string[] = ['text', 'start', 'end', 'tag', 'options']
   dataSource = new MatTableDataSource<TagInfo>();
@@ -18,10 +18,9 @@ export class TaggedEntityViewComponent implements OnInit {
   private __differ: any;
 
   constructor(
-    private differs: IterableDiffers,
-    private annotationService: AnnotationDataService
+    private differs: IterableDiffers
   ) {
-    this.__differ = differs.find([]).create(null);
+    this.__differ = this.differs.find([]).create(null);
   }
   ngOnInit() { }
 
@@ -34,6 +33,7 @@ export class TaggedEntityViewComponent implements OnInit {
 
   remove(entity: TagInfo) {
     this.currentData.removeEntity(entity.id)
+    this.onDataChanged.emit();
   }
 
 }

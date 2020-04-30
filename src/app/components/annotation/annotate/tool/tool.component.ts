@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, IterableDiffers } from '@angular/core';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tool',
@@ -9,19 +11,20 @@ import { EntityTag } from 'src/app/domain/entity-tag.domain';
   styleUrls: ['./tool.component.scss']
 })
 export class ToolComponent implements OnInit {
-  start: number = NaN ;
+  start: number = NaN;
   end: number = NaN;
   sub: string = undefined;
   entityTag: EntityTag;
 
   constructor(
     private annotationService: AnnotationDataService
-  ) { 
+  ) { }
+
+  ngOnChanges() {
+    console.log('change')
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
   get entityTags(): EntityTag[] {
     return this.annotationService.entityTags;
@@ -46,23 +49,22 @@ export class ToolComponent implements OnInit {
   get hasSelected(): boolean {
     return !isNaN(this.start) && !isNaN(this.end)
   }
-  
+
   getSelected() {
     let selected = window.getSelection()
     let press = Number(selected.anchorNode.parentElement.id.slice(5));
     let release = Number(selected.focusNode.parentElement.id.slice(5));
 
     this.start = Math.min(press, release)
-    this.end = Math.max(press, release)+1
-    if(this.start!=NaN && this.end!=NaN) {
-      this.sub = this.currentData.sentence.slice(this.start, this.end);
+    this.end = Math.max(press, release)
+    if (this.hasSelected) {
+      this.sub = this.currentData.sentence.slice(this.start, this.end + 1);
     }
   }
 
-
-  sentenceToList(sentence: string)  {
+  sentenceToList(sentence: string) {
     let arr = []
-    for(let i = 0; i < sentence.length; i++) {
+    for (let i = 0; i < sentence.length; i++) {
       arr.push(sentence.charAt(i))
     }
     return arr;

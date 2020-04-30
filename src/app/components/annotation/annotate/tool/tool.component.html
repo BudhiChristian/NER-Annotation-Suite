@@ -9,11 +9,14 @@
             </div>
         </ng-template>
     </div>
-    <div *ngIf='hasSelected; else notSelected'>
+    <div>
         <h4>Selected Substring</h4>
-        <div>
+        <div *ngIf='hasSelected; else notSelected'>
             "{{sub}}"
         </div>
+        <ng-template #notSelected>
+            <div>Highlight text above to begin tagging.</div>
+        </ng-template>
         <div class='selected-details-container'>
             <div>
                 <h4>Start Index</h4>
@@ -27,7 +30,7 @@
                 <h4>Entity Tag</h4>
                 <mat-form-field>
                     <mat-label>Select Entity Tag</mat-label>
-                    <mat-select [(value)]='entityTag'>
+                    <mat-select [disabled]='' [(value)]='entityTag'>
                         <mat-option *ngFor='let tag of entityTags' [value]='tag'>{{tag.name}}</mat-option>
                     </mat-select>
                     <mat-hint>Tags can be added to the right.</mat-hint>
@@ -35,12 +38,9 @@
             </div>
         </div>
         <div class='align-center'>
-            <button mat-raised-button color='primary' [disabled]='!entityTag' (click)='addEntity()'>Save Tagged Entity</button>
+            <button mat-raised-button color='primary' [disabled]=' !hasSelected||!entityTag' (click)='addEntity()'>Save Tagged Entity</button>
         </div>
     </div>
-    <ng-template #notSelected>
-        <p class='align-center'>Highlight text above to begin tagging.</p>
-    </ng-template>
     <div *ngIf='currentData?.entities?.length > 0'>
         <h3 class='align-center'>Tagged Entities</h3>
         <app-tagged-entity-view [currentData]='currentData'></app-tagged-entity-view>
