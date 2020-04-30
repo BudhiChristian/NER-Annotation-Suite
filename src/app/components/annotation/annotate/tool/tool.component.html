@@ -30,7 +30,7 @@
                 <h4>Entity Tag</h4>
                 <mat-form-field>
                     <mat-label>Select Entity Tag</mat-label>
-                    <mat-select [disabled]='' [(value)]='entityTag'>
+                    <mat-select [disabled]='!hasSelected' [(value)]='entityTag'>
                         <mat-option *ngFor='let tag of entityTags' [value]='tag'>{{tag.name}}</mat-option>
                     </mat-select>
                     <mat-hint>Tags can be added to the right.</mat-hint>
