@@ -49,7 +49,6 @@ export class ToolComponent implements OnInit {
   
   getSelected() {
     let selected = window.getSelection()
-    console.log(selected)
     let press = Number(selected.anchorNode.parentElement.id.slice(5));
     let release = Number(selected.focusNode.parentElement.id.slice(5));
 

@@ -32,4 +32,8 @@ export class TagInfo {
     get end(): number {
         return this.__end;
     }
+
+    get text(): string {
+        return this.__text;
+    }
 }
