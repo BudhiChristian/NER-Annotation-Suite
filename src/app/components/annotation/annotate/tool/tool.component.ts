@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, IterableDiffers } from '@angular/core';
+import { Component, OnInit, IterableDiffers, KeyValueDiffers } from '@angular/core';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tool',
@@ -15,16 +16,24 @@ export class ToolComponent implements OnInit {
   entityTag: EntityTag;
   styles: any [] = [];
 
+  __subscribers: Subscription[];
+
   constructor(
     private annotationService: AnnotationDataService
   ) { }
 
-  ngOnChanges() {
-    console.log('change')
-  }
-
   ngOnInit() { 
     this.setStyle();
+    this.__subscribers = this.annotationService.entityTags.map(ent => ent.changed.subscribe(() => {
+      console.log('style')
+      this.setStyle();
+    }))
+  }
+
+  ngOnDestroy() {
+    this.__subscribers.forEach(s => {
+      s.unsubscribe();
+    })
   }
 
   setStyle() {
