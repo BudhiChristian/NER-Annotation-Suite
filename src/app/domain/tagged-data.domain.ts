@@ -48,5 +48,24 @@ export class TaggedData {
         this.__entities = this.__entities.filter(entity => entity.id != id);
     }
 
+    getCharacterIndexEntity(idx): EntityTag {
+        let matches = this.__entities.filter(entity => entity.start <= idx && entity.end >= idx)
+        if (matches.length > 0) {
+            return matches[0].tag
+        }
+        return undefined
+    }
 
+    geStyleDict() {
+        let dict = []
+        for(let i = 0; i < this.__sentence.length; i++) {
+            let e = this.__entities.find(entity => entity.start <= i && entity.end >= i)
+            
+            dict.push({
+                'background-color': e ? e.tag.color : '',
+                'color': e ? e.tag.contrastColor : ''
+            });
+        }
+        return dict;
+    }
 }

@@ -1,14 +1,28 @@
+import { BehaviorSubject } from 'rxjs';
+
 export class EntityTag {
     private static count = 0;
     public id: number;
-    public name: string;
+    private __name: string;
     private __color: string;
     private __contrastColor: string;
+
+    public changed: BehaviorSubject<any>  = new BehaviorSubject<any>(null);
+    
     public constructor(name: string, color: string) {
         EntityTag.count ++;
         this.id = EntityTag.count
-        this.name = name;
+        this.__name = name;
         this.color = color;
+    }
+
+    get name(): string {
+        return this.__name;
+    }
+
+    set name(val: string) {
+        this.__name = val;
+        this.changed.next(null);
     }
 
     get color(): string {
@@ -26,6 +40,7 @@ export class EntityTag {
         let darkContrast = this.getContrast(luminance, 0);
 
         this.__contrastColor = (lightContrast > darkContrast) ? '#ffffff' : '#000000';
+        this.changed.next(null);
     }
 
     get contrastColor(): string {

@@ -10,8 +10,6 @@
 }
 
 .sentence-view-container,.entity-view-container {
-    overflow: auto;
-
     flex: 1 1 0;
     min-width: 320px;
     padding: 0 0.2rem 0.4rem;
@@ -22,8 +20,6 @@ h3 {
 }
 
 .annotation-tool-container  {
-    overflow: auto;
-
     flex: 1 1 auto;
     min-width: 600px;
     max-width: 1000px;

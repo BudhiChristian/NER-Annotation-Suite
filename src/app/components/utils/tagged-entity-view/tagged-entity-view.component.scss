@@ -1,4 +1,20 @@
 .entity-table {
     width: 100%;
-    text-align: center !important;
+}
+
+td.mat-cell {
+    padding: 0 0.5rem;
+}
+td.mat-cell:first-of-type {
+    width: 100%;
+}
+
+.entity-tag-name {
+    max-width: 3rem;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0px 1px 3px #00000099;
 }
