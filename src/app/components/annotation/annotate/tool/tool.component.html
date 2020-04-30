@@ -9,7 +9,7 @@
             </div>
         </ng-template>
     </div>
-    <div *ngIf='start && end; else notSelected'>
+    <div *ngIf='hasSelected; else notSelected'>
         <h4>Selected Substring</h4>
         <div>
             "{{sub}}"
@@ -30,7 +30,7 @@
                     <mat-select [(value)]='entityTag'>
                         <mat-option *ngFor='let tag of entityTags' [value]='tag'>{{tag.name}}</mat-option>
                     </mat-select>
-                    <mat-hint>More tags can be added to the right.</mat-hint>
+                    <mat-hint>Tags can be added to the right.</mat-hint>
                 </mat-form-field>
             </div>
         </div>

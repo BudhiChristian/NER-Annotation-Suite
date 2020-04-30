@@ -40,8 +40,8 @@ export class TaggedData {
         return this.__entities;
     }
 
-    addEntity(tag: EntityTag, start: number, end: number) {
-        this.__entities.push(new TagInfo(tag, start, end));
+    addEntity(tag: EntityTag, start: number, end: number, text: string) {
+        this.__entities.push(new TagInfo(tag, start, end, text));
     }
 
     removeEntity(id: number) {

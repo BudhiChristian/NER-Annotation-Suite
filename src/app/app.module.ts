@@ -23,6 +23,7 @@ import { ConfirmationModalComponent } from './components/utils/confirmation-moda
 import { VolatileGuard } from './guards/volatile.guard';
 import { SentenceViewComponent } from './components/utils/sentence-view/sentence-view.component';
 import { ToolComponent } from './components/annotation/annotate/tool/tool.component';
+import { TaggedEntityViewComponent } from './components/utils/tagged-entity-view/tagged-entity-view.component';
 
 const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -42,7 +43,8 @@ const MATERIAL_IMPORTS = [ MatDialogModule, MatSnackBarModule, MatInputModule, M
     EditTagComponent,
     ConfirmationModalComponent,
     SentenceViewComponent,
-    ToolComponent
+    ToolComponent,
+    TaggedEntityViewComponent
   ],
   imports: [
     BrowserModule,

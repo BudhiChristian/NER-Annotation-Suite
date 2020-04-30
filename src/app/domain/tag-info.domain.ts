@@ -7,12 +7,14 @@ export class TagInfo {
     private __tag: EntityTag;
     private __start: number;
     private __end: number;
-    public constructor(text: EntityTag, start: number, end: number) {
+    private __text: string;
+    public constructor(tag: EntityTag, start: number, end: number, text: string) {
         TagInfo.count++;
         this.__id = TagInfo.count;
-        this.__tag = text;
+        this.__tag = tag;
         this.__start = start;
         this.__end = end;
+        this.__text = text;
     }
 
     get id(): number {

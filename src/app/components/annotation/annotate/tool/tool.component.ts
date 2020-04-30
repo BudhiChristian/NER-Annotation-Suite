@@ -9,9 +9,9 @@ import { EntityTag } from 'src/app/domain/entity-tag.domain';
   styleUrls: ['./tool.component.scss']
 })
 export class ToolComponent implements OnInit {
-  start: number;
-  end: number;
-  sub: string;
+  start: number = NaN ;
+  end: number = NaN;
+  sub: string = undefined;
   entityTag: EntityTag;
 
   constructor(
@@ -36,25 +36,30 @@ export class ToolComponent implements OnInit {
   }
 
   addEntity() {
-    this.currentData.addEntity(this.entityTag, this.start, this.end)
-    this.start = undefined;
-    this.end = undefined;
+    this.currentData.addEntity(this.entityTag, this.start, this.end, this.sub)
+    this.start = NaN;
+    this.end = NaN;
     this.sub = '';
     this.entityTag = undefined;
   }
 
+  get hasSelected(): boolean {
+    return !isNaN(this.start) && !isNaN(this.end)
+  }
   
   getSelected() {
     let selected = window.getSelection()
+    console.log(selected)
     let press = Number(selected.anchorNode.parentElement.id.slice(5));
     let release = Number(selected.focusNode.parentElement.id.slice(5));
 
     this.start = Math.min(press, release)
     this.end = Math.max(press, release)+1
-    if(this.start && this.end) {
+    if(this.start!=NaN && this.end!=NaN) {
       this.sub = this.currentData.sentence.slice(this.start, this.end);
     }
   }
+
 
   sentenceToList(sentence: string)  {
     return [...sentence]
