@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./sentence-view.component.scss']
 })
 export class SentenceViewComponent implements OnInit {
-  @Output('selectedData') selectData: EventEmitter<TaggedData> = new EventEmitter<TaggedData>();
   remaining: number = 0;
   newSentence: string = '';
   constructor(

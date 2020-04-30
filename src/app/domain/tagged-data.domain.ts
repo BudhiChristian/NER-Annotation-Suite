@@ -1,4 +1,5 @@
 import { TagInfo } from './tag-info.domain';
+import { EntityTag } from './entity-tag.domain';
 
 export class TaggedData {
     private static count: number = 0;
@@ -39,8 +40,8 @@ export class TaggedData {
         return this.__entities;
     }
 
-    addEntity(text: string, start: number, end: number) {
-        this.__entities.push(new TagInfo(text, start, end));
+    addEntity(tag: EntityTag, start: number, end: number, text: string) {
+        this.__entities.push(new TagInfo(tag, start, end, text));
     }
 
     removeEntity(id: number) {

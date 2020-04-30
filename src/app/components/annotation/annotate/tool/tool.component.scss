@@ -1,0 +1,39 @@
+@import 'src/custom-theme.scss';
+
+$border-radius: 0.5rem;
+$general-padding: 0.5rem;
+$general-box-shadow: 0px 1px 3px #00000099;
+
+
+.annotation-tool-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-highlight-container {
+    // border: 0.5px solid #ccc;
+    border-radius: $border-radius;
+    padding: $general-padding;
+    box-shadow: $general-box-shadow inset;
+
+    background-color: mat-color($accent, lighter);
+    color: mat-color($accent, lighter-contrast);
+
+    max-height: 200px;
+    overflow: auto;
+}
+
+.selected-details-container {
+    display: flex;
+}
+.selected-details-container>* {
+    flex: 1 1 0;
+}
+
+.align-center {
+    text-align: center;
+}
+
+h4 {
+    margin: 0.5rem 0;
+}
