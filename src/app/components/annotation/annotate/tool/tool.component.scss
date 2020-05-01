@@ -10,10 +10,26 @@ $general-box-shadow: 0px 1px 3px #00000099;
     flex-direction: column;
 }
 
+.annotation-controls {
+    background-color: mat-color($accent, default);
+    color: mat-color($accent, default-contrast);
+    padding: 0 $general-padding;
+
+    display: flex;
+
+    border: 0.5px solid #ccc;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+}
+.annotation-controls>*:not(:last-child) {
+    margin-right: 0.2rem;
+}
+
+
 .text-highlight-container {
-    // border: 0.5px solid #ccc;
-    border-radius: $border-radius;
-    padding: $general-padding;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: 1rem;
     box-shadow: $general-box-shadow inset;
 
     background-color: mat-color($accent, lighter);
