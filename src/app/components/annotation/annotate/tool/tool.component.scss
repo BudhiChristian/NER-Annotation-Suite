@@ -13,7 +13,7 @@ $general-box-shadow: 0px 1px 3px #00000099;
 .annotation-controls {
     background-color: mat-color($accent, default);
     color: mat-color($accent, default-contrast);
-    padding: $general-padding;
+    padding: 0 $general-padding;
 
     display: flex;
 

@@ -14,31 +14,37 @@ export class ToolComponent implements OnInit {
   end: number = NaN;
   sub: string = undefined;
   entityTag: EntityTag;
-  styles: any [] = [];
+  styles: any[] = [];
   previousSentence: number = -1;
+  snapToToken: boolean = false;
 
-  __subscribers: Subscription[];
+  // __subscribers: Subscription[];
+  __entityTagListChanges: Subscription;
 
   constructor(
     private annotationService: AnnotationDataService
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.setStyle();
-    this.__subscribers = this.annotationService.entityTags.map(ent => ent.changed.subscribe(() => {
-      console.log('style')
+    this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
-    }))
+    });
+    // this.__subscribers = this.annotationService.entityTags.map(ent => ent.changed.subscribe(() => {
+    //   console.log('style')
+    //   this.setStyle();
+    // }))
   }
 
   ngOnDestroy() {
-    this.__subscribers.forEach(s => {
-      s.unsubscribe();
-    })
+    this.__entityTagListChanges.unsubscribe();
+    // this.__subscribers.forEach(s => {
+    //   s.unsubscribe();
+    // })
   }
 
   setStyle() {
-    this.styles = this.currentData ? this.currentData.geStyleDict()  : []
+    this.styles = this.currentData ? this.currentData.geStyleDict() : []
   }
 
   get entityTags(): EntityTag[] {
@@ -83,11 +89,33 @@ export class ToolComponent implements OnInit {
     let press = Number(selected.anchorNode.parentElement.id.slice(5));
     let release = Number(selected.focusNode.parentElement.id.slice(5));
 
-    this.start = Math.min(press, release)
-    this.end = Math.max(press, release)
+    let sentence = this.currentData.sentence;
+    this.start = this.snapNearestToken(sentence, Math.min(press, release), true);
+    this.end = this.snapNearestToken(sentence, Math.max(press, release), false) + 1
     if (this.hasSelected) {
-      this.sub = this.currentData.sentence.slice(this.start, this.end + 1);
+      this.sub = sentence.slice(this.start, this.end);
     }
+  }
+
+  snapNearestToken(sentence: string, index: number, isStart) {
+    if(isNaN(index) || !this.snapToToken) {
+      return index;
+    }
+    let c = sentence[index];
+    if (!c.trim()) {
+      while (index < sentence.length - 1 && index > 0&& !c.trim()) {
+        index += (isStart ? 1 : -1);
+        c = sentence[index]
+      }
+    } else {
+      while (index < sentence.length - 1 && index > 0 && c.trim()) {
+        index += (isStart ? -1 : 1);
+        c = sentence[index]
+      }
+      index += (isStart ? 1 : -1);
+    }
+
+    return index;
   }
 
   sentenceToList(sentence: string) {
