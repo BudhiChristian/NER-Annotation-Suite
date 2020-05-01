@@ -1,4 +1,10 @@
 <div class='annotation-tool-container'>
+    <div class='annotation-controls'>
+        <button mat-raised-button color='primary' [disabled]='previousSentence < 0' (click)='previous()'>Previous</button>
+        <button mat-raised-button color='primary' [disabled]='!currentData'(click)='next()'>Next</button>
+        <div style='flex: 1 1 auto'></div>
+        <button mat-raised-button color='primary' routerLink='/tool/export'>Finish</button>
+    </div>
     <div class='text-highlight-container'>
         <div *ngIf='currentData; else noSentence' id='base-string' (mouseup)='getSelected()'>
             <span id='char-{{index}}' *ngFor='let c of sentenceToList(currentData.sentence); let index = index'

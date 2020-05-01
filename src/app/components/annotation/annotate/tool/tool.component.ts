@@ -15,6 +15,7 @@ export class ToolComponent implements OnInit {
   sub: string = undefined;
   entityTag: EntityTag;
   styles: any [] = [];
+  previousSentence: number = -1;
 
   __subscribers: Subscription[];
 
@@ -50,6 +51,18 @@ export class ToolComponent implements OnInit {
       return fullData[0];
     }
     return undefined;
+  }
+
+  next() {
+    this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData);
+    this.currentData.touch();
+    this.setStyle();
+  }
+
+  previous() {
+    this.annotationService.getTaggedData(true)[this.previousSentence].untouch();
+    this.previousSentence--;
+    this.setStyle()
   }
 
   addEntity() {
