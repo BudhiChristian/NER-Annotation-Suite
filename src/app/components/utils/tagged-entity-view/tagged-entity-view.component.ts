@@ -9,7 +9,7 @@ import { TaggedData } from 'src/app/domain/tagged-data.domain';
   styleUrls: ['./tagged-entity-view.component.scss']
 })
 export class TaggedEntityViewComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @Input() currentData: TaggedData;
   @Output() onDataChanged: EventEmitter<void> = new EventEmitter<void>();
@@ -31,6 +31,14 @@ export class TaggedEntityViewComponent implements OnInit {
     if (change) {
       this.dataSource.data = this.currentData.entities
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'tag':
+            return item.tag.name;
+          default:
+            return item[property];
+        }
+      }
     }
   }
 
