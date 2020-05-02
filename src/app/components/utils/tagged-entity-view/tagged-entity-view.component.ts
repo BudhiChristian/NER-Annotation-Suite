@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, IterableDiffers, Output, EventEmitter, ViewChild } from '@angular/core';
 import { TagInfo } from 'src/app/domain/tag-info.domain';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
+import { EditEntityComponent } from './edit-entity/edit-entity.component';
 
 @Component({
   selector: 'app-tagged-entity-view',
@@ -20,7 +21,8 @@ export class TaggedEntityViewComponent implements OnInit {
   private __differ: any;
 
   constructor(
-    private differs: IterableDiffers
+    private differs: IterableDiffers,
+    private dialog: MatDialog
   ) {
     this.__differ = this.differs.find([]).create(null);
   }
@@ -45,6 +47,23 @@ export class TaggedEntityViewComponent implements OnInit {
   remove(entity: TagInfo) {
     this.currentData.removeEntity(entity.id)
     this.onDataChanged.emit();
+  }
+  edit(entity: TagInfo) {
+    this.dialog.open(EditEntityComponent, {
+      data: {
+        sentence: this.currentData.sentence,
+        entity: entity
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '600px'
+    }).afterClosed().subscribe((res: TagInfo) => {
+      if(!res) {
+        return
+      }
+      this.currentData.editEntity(entity.id, res)
+      this.onDataChanged.emit();
+    })
   }
 
 }

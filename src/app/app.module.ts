@@ -24,6 +24,7 @@ import { VolatileGuard } from './guards/volatile.guard';
 import { SentenceViewComponent } from './components/utils/sentence-view/sentence-view.component';
 import { ToolComponent } from './components/annotation/annotate/tool/tool.component';
 import { TaggedEntityViewComponent } from './components/utils/tagged-entity-view/tagged-entity-view.component';
+import { EditEntityComponent } from './components/utils/tagged-entity-view/edit-entity/edit-entity.component';
 
 const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -44,7 +45,8 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     ConfirmationModalComponent,
     SentenceViewComponent,
     ToolComponent,
-    TaggedEntityViewComponent
+    TaggedEntityViewComponent,
+    EditEntityComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
   ],
   entryComponents: [
     EditTagComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    EditEntityComponent
   ],
   bootstrap: [AppComponent]
 })
