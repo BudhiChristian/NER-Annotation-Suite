@@ -18,7 +18,6 @@ export class ToolComponent implements OnInit {
   previousSentence: number = -1;
   snapToToken: boolean = false;
 
-  // __subscribers: Subscription[];
   __entityTagListChanges: Subscription;
 
   constructor(
@@ -30,17 +29,10 @@ export class ToolComponent implements OnInit {
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
     });
-    // this.__subscribers = this.annotationService.entityTags.map(ent => ent.changed.subscribe(() => {
-    //   console.log('style')
-    //   this.setStyle();
-    // }))
   }
 
   ngOnDestroy() {
     this.__entityTagListChanges.unsubscribe();
-    // this.__subscribers.forEach(s => {
-    //   s.unsubscribe();
-    // })
   }
 
   setStyle() {
@@ -97,7 +89,7 @@ export class ToolComponent implements OnInit {
     }
   }
 
-  snapNearestToken(sentence: string, index: number, isStart) {
+  private snapNearestToken(sentence: string, index: number, isStart) {
     if(isNaN(index) || !this.snapToToken) {
       return index;
     }

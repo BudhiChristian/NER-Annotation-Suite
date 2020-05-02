@@ -12,6 +12,7 @@ export class AnnotationDataService {
   private __entityTags: EntityTag[] = [];
   private __taggedData: TaggedData[] = [];
 
+  private __subscribers: Subscription[] = [];
   entityTagChanges: BehaviorSubject<void> = new BehaviorSubject<void>(null);
 
   constructor() { }
@@ -55,8 +56,6 @@ export class AnnotationDataService {
     return this.__entityTags;
   }
 
-  private __subscribers: Subscription[] = [];
-
   addEntityTag(name: string, color: string) {
     this.__entityTags.push(new EntityTag(name, color));
     this.entityTagChanges.next();
@@ -69,7 +68,7 @@ export class AnnotationDataService {
     this.resetSubscribers();
   }
 
-  resetSubscribers() {
+  private resetSubscribers() {
     this.__subscribers.forEach(sub => {
       sub.unsubscribe()
     })
