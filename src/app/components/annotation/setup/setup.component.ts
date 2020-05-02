@@ -44,12 +44,18 @@ export class SetupComponent extends VolatileComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  set lines(val: string[]) {
-    this.annotationService.lines = val;
-  }
+  
   get lines(): string[] {
     return this.annotationService.lines;
   }
-
+  set lines(val: string[]) {
+    this.annotationService.lines = val;
+  }
+  
+  get snapToToken(): boolean {
+    return this.annotationService.snapToToken;
+  }
+  set snapToToken(val: boolean) {
+    this.annotationService.snapToToken = val;
+  }
 }

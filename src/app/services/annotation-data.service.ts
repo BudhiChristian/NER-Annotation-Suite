@@ -13,7 +13,9 @@ export class AnnotationDataService {
   private __taggedData: TaggedData[] = [];
 
   private __subscribers: Subscription[] = [];
-  entityTagChanges: BehaviorSubject<void> = new BehaviorSubject<void>(null);
+  public entityTagChanges: BehaviorSubject<void> = new BehaviorSubject<void>(null);
+
+  public snapToToken: boolean = true;
 
   constructor() { }
   reset() {
@@ -21,6 +23,7 @@ export class AnnotationDataService {
     this.__lines = [];
     this.__entityTags = [];
     this.__taggedData = [];
+    this.snapToToken = true;
   }
 
   get setupTouched(): boolean {

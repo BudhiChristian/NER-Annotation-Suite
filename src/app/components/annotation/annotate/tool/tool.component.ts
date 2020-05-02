@@ -16,7 +16,6 @@ export class ToolComponent implements OnInit {
   entityTag: EntityTag;
   styles: any[] = [];
   previousSentence: number = -1;
-  snapToToken: boolean = false;
 
   __entityTagListChanges: Subscription;
 
@@ -37,6 +36,13 @@ export class ToolComponent implements OnInit {
 
   setStyle() {
     this.styles = this.currentData ? this.currentData.geStyleDict() : []
+  }
+
+  get snapToToken(): boolean {
+    return this.annotationService.snapToToken;
+  }
+  set snapToToken(val: boolean) {
+    this.annotationService.snapToToken = val;
   }
 
   get entityTags(): EntityTag[] {
