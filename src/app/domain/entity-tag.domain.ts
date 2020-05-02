@@ -7,7 +7,7 @@ export class EntityTag {
     private __color: string;
     private __contrastColor: string;
 
-    public changed: BehaviorSubject<any>  = new BehaviorSubject<any>(null);
+    public changed: BehaviorSubject<void>  = new BehaviorSubject<void>(null);
     
     public constructor(name: string, color: string) {
         EntityTag.count ++;
@@ -22,7 +22,7 @@ export class EntityTag {
 
     set name(val: string) {
         this.__name = val;
-        this.changed.next(null);
+        this.changed.next();
     }
 
     get color(): string {
@@ -40,7 +40,7 @@ export class EntityTag {
         let darkContrast = this.getContrast(luminance, 0);
 
         this.__contrastColor = (lightContrast > darkContrast) ? '#ffffff' : '#000000';
-        this.changed.next(null);
+        this.changed.next();
     }
 
     get contrastColor(): string {

@@ -16,9 +16,7 @@ export class ToolComponent implements OnInit {
   entityTag: EntityTag;
   styles: any[] = [];
   previousSentence: number = -1;
-  snapToToken: boolean = false;
 
-  // __subscribers: Subscription[];
   __entityTagListChanges: Subscription;
 
   constructor(
@@ -30,21 +28,21 @@ export class ToolComponent implements OnInit {
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
     });
-    // this.__subscribers = this.annotationService.entityTags.map(ent => ent.changed.subscribe(() => {
-    //   console.log('style')
-    //   this.setStyle();
-    // }))
   }
 
   ngOnDestroy() {
     this.__entityTagListChanges.unsubscribe();
-    // this.__subscribers.forEach(s => {
-    //   s.unsubscribe();
-    // })
   }
 
   setStyle() {
     this.styles = this.currentData ? this.currentData.geStyleDict() : []
+  }
+
+  get snapToToken(): boolean {
+    return this.annotationService.snapToToken;
+  }
+  set snapToToken(val: boolean) {
+    this.annotationService.snapToToken = val;
   }
 
   get entityTags(): EntityTag[] {
@@ -97,7 +95,7 @@ export class ToolComponent implements OnInit {
     }
   }
 
-  snapNearestToken(sentence: string, index: number, isStart) {
+  private snapNearestToken(sentence: string, index: number, isStart) {
     if(isNaN(index) || !this.snapToToken) {
       return index;
     }
@@ -112,7 +110,9 @@ export class ToolComponent implements OnInit {
         index += (isStart ? -1 : 1);
         c = sentence[index]
       }
-      index += (isStart ? 1 : -1);
+      if (!c.trim()) {
+        index += (isStart ? 1 : -1);
+      }
     }
 
     return index;

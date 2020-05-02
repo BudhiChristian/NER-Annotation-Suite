@@ -12,7 +12,10 @@ export class AnnotationDataService {
   private __entityTags: EntityTag[] = [];
   private __taggedData: TaggedData[] = [];
 
-  entityTagChanges: BehaviorSubject<void> = new BehaviorSubject<void>(null);
+  private __subscribers: Subscription[] = [];
+  public entityTagChanges: BehaviorSubject<void> = new BehaviorSubject<void>(null);
+
+  public snapToToken: boolean = true;
 
   constructor() { }
   reset() {
@@ -20,6 +23,7 @@ export class AnnotationDataService {
     this.__lines = [];
     this.__entityTags = [];
     this.__taggedData = [];
+    this.snapToToken = true;
   }
 
   get setupTouched(): boolean {
@@ -55,8 +59,6 @@ export class AnnotationDataService {
     return this.__entityTags;
   }
 
-  private __subscribers: Subscription[] = [];
-
   addEntityTag(name: string, color: string) {
     this.__entityTags.push(new EntityTag(name, color));
     this.entityTagChanges.next();
@@ -69,7 +71,7 @@ export class AnnotationDataService {
     this.resetSubscribers();
   }
 
-  resetSubscribers() {
+  private resetSubscribers() {
     this.__subscribers.forEach(sub => {
       sub.unsubscribe()
     })

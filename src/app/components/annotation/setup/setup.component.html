@@ -3,7 +3,7 @@
     <p>Additional sentences can also be added in the next screen.</p>
     <mat-form-field>
         <mat-label>Input Type</mat-label>
-        <mat-select [(value)]="inputType">
+        <mat-select [(value)]="inputType" (selectionChange)='lines = []'>
             <mat-option *ngFor="let option of INPUT_TYPES" [value]="option">{{option}}</mat-option>
         </mat-select>
     </mat-form-field>
@@ -23,7 +23,9 @@
     <h3>Add Tags</h3>
     <p>Additional tags can also be added in the next screen.</p>
     <app-tag-view></app-tag-view>
-    
+
+    <h3>Options</h3>
+    <mat-checkbox [checked]='snapToToken' (change)='snapToToken = $event.checked' color='primary'>Snap To Token - whole token selected even if partially highlighted</mat-checkbox>
     <div class='begin-container'>
         <button mat-raised-button color='primary' [disabled]='inputType != INPUT_TYPES[0] && lines.length < 1' routerLink='/tool/annotate'>Begin Annotation</button>
     </div>
