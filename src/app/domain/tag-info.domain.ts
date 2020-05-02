@@ -36,4 +36,11 @@ export class TagInfo {
     get text(): string {
         return this.__text;
     }
+
+    edit(value: TagInfo) {
+        this.__tag = value.tag;
+        this.__start = value.start;
+        this.__end = value.end;
+        this.__text = value.__text;
+    }
 }

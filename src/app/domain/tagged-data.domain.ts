@@ -48,6 +48,11 @@ export class TaggedData {
         this.__entities = this.__entities.filter(entity => entity.id != id);
     }
 
+    editEntity(targetId: number, value: TagInfo) {
+        let ent = this.__entities.find(e => e.id == targetId)
+        ent.edit(value);
+    }
+
     geStyleDict() {
         let dict = []
         for(let i = 0; i < this.__sentence.length; i++) {
