@@ -110,7 +110,9 @@ export class ToolComponent implements OnInit {
         index += (isStart ? -1 : 1);
         c = sentence[index]
       }
-      index += (isStart ? 1 : -1);
+      if (!c.trim()) {
+        index += (isStart ? 1 : -1);
+      }
     }
 
     return index;
