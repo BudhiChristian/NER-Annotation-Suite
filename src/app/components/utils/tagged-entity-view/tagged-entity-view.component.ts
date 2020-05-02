@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, IterableDiffers, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, IterableDiffers, Output, EventEmitter, ViewChild } from '@angular/core';
 import { TagInfo } from 'src/app/domain/tag-info.domain';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { TaggedData } from 'src/app/domain/tagged-data.domain';
 
 @Component({
@@ -9,6 +9,8 @@ import { TaggedData } from 'src/app/domain/tagged-data.domain';
   styleUrls: ['./tagged-entity-view.component.scss']
 })
 export class TaggedEntityViewComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   @Input() currentData: TaggedData;
   @Output() onDataChanged: EventEmitter<void> = new EventEmitter<void>();
 
@@ -28,6 +30,7 @@ export class TaggedEntityViewComponent implements OnInit {
     const change = this.__differ.diff(this.currentData.entities);
     if (change) {
       this.dataSource.data = this.currentData.entities
+      this.dataSource.sort = this.sort;
     }
   }
 
