@@ -36,6 +36,10 @@ export class ExportComponent implements OnInit {
     if (taggedInfo) {
       this.save(taggedInfo)
     }
+    let untaggedInfo: ExportInfo = this.exportUntagged()
+    if (untaggedInfo) {
+      this.save(untaggedInfo);
+    }
 
   }
   save(info: ExportInfo) {
@@ -50,6 +54,21 @@ export class ExportComponent implements OnInit {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 0);
+  }
+
+  exportUntagged(): ExportInfo {
+    switch(this.untaggedOutputType) {
+      case 'txt':
+        return {
+          data: this.annotatedService.getTaggedData().map(data => data.sentence).join('\n'),
+          filename: 'untagged-data.txt',
+          type: 'text/plain'
+        }
+      default:
+        this.snackbar.open('Invalid untagged data export type.', 'close', {
+          duration: 3000
+        })
+    }
   }
 
   exportTagged(): ExportInfo {
