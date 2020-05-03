@@ -41,6 +41,10 @@ export class AnnotationDataService {
     return this.__taggedData.filter(d => !d.touched);
   }
 
+  get finisedTagged(): TaggedData[] {
+    return this.__taggedData.filter(d => d.touched);
+  }
+
   set lines(val: string[]) {
     this.__lines = val;
     this.__taggedData = val.map(line => new TaggedData(line));
