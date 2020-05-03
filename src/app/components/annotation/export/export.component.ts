@@ -10,7 +10,7 @@ interface ExportInfo { data: any, filename: string, type: string }
   styleUrls: ['./export.component.scss']
 })
 export class ExportComponent implements OnInit {
-  taggedOutputTypes: string[] = ['json (spaCy)'] //, 'csv', 'tsv'];
+  taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
   taggedOutputType: string = this.taggedOutputTypes[0];
   untaggedOutputTypes: string[] = ['txt'];
   untaggedOutputType: string = this.untaggedOutputTypes[0];
@@ -33,18 +33,18 @@ export class ExportComponent implements OnInit {
 
   export() {
     let taggedInfo: ExportInfo = this.exportTagged()
-    if(taggedInfo) {
+    if (taggedInfo) {
       this.save(taggedInfo)
     }
 
   }
   save(info: ExportInfo) {
-    var file = new Blob([info.data], {type: info.type});
+    var file = new Blob([info.data], { type: info.type });
     let a = document.createElement('a');
     let url = URL.createObjectURL(file);
     a.href = url;
     a.download = info.filename,
-    document.body.appendChild(a);
+      document.body.appendChild(a);
     a.click();
     setTimeout(() => {
       document.body.removeChild(a);
@@ -52,13 +52,19 @@ export class ExportComponent implements OnInit {
     }, 0);
   }
 
-  exportTagged(): ExportInfo{
+  exportTagged(): ExportInfo {
     switch (this.taggedOutputType) {
       case 'json (spaCy)':
         return {
-          data: this.exportTaggedSpacy(),
+          data: this.getSpacyTagged(),
           filename: 'tagged-data.json',
           type: 'text/json'
+        }
+      case 'csv':
+        return {
+          data: this.getCSVTagged(),
+          filename: 'tagged-data.csv',
+          type: 'text/csv'
         }
       default:
         this.snackbar.open('Invalid tagged data export type.', 'close', {
@@ -67,7 +73,7 @@ export class ExportComponent implements OnInit {
     }
   }
 
-  exportTaggedSpacy() {
+  getSpacyTagged() {
     let output = this.annotatedService.finisedTagged.map(data => ({
       content: data.sentence,
       annotation: data.entities.map(entity => ({
@@ -81,5 +87,34 @@ export class ExportComponent implements OnInit {
     }))
     return JSON.stringify(output, null, 4)
   }
+
+  getCSVTagged() {
+    let output = this.getTokenSplit()
+      .map(line => line
+        .map(col => `"${col.replace('"', '""')}"`)
+        .join(','))
+      .join('\n');
+    return output;
+  }
+
+  getTokenSplit(): string[][] {
+    let output: string[][] = [];
+
+    this.annotatedService.finisedTagged.forEach((data, index) => {
+      let startIndex = 0;
+      for (let token of data.sentence.split(' ')) {
+        let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end > startIndex)
+        let line = [
+          startIndex == 0 ? `Senetence: ${index + 1}` : '',
+          token,
+          (entities.length > 0) ? entities[0].tag.name : 'O'
+        ]
+        output.push(line);
+        startIndex += (token.length + 1)
+      }
+    })
+    return output;
+  }
+
 
 }
