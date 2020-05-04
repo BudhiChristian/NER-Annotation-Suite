@@ -23,7 +23,15 @@ export class ToolComponent implements OnInit {
     private annotationService: AnnotationDataService
   ) { }
 
+  private reset() {
+    this.start = NaN;
+    this.end = NaN;
+    this.sub = undefined;
+    this.entityTag = undefined;
+  }
+
   ngOnInit() {
+    this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
     this.setStyle();
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
@@ -57,24 +65,27 @@ export class ToolComponent implements OnInit {
     return undefined;
   }
 
+  get hasTagged(): boolean {
+    return this.annotationService.finisedTagged.length > 0;
+  }
+
   next() {
     this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData);
     this.currentData.touch();
+    this.reset();
     this.setStyle();
   }
 
   previous() {
     this.annotationService.getTaggedData(true)[this.previousSentence].untouch();
     this.previousSentence--;
+    this.reset();
     this.setStyle()
   }
 
   addEntity() {
     this.currentData.addEntity(this.entityTag, this.start, this.end, this.sub)
-    this.start = NaN;
-    this.end = NaN;
-    this.sub = '';
-    this.entityTag = undefined;
+    this.reset();
     this.setStyle();
   }
 

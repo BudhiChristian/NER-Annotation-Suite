@@ -16,7 +16,7 @@ export class AnnotationComponent implements OnInit {
   }
 
   ngOnDestroy() {
-  this.annotationService.reset();
+    this.annotationService.reset();
   }
 
 }

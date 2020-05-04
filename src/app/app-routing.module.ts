@@ -33,7 +33,9 @@ const routes: Routes = [
         canActivate: [RouteGuard]
       }, {
         path: 'export',
-        component: ExportComponent
+        component: ExportComponent,
+        canDeactivate: [VolatileGuard],
+        canActivate: [RouteGuard]
       }, {
         path: '**',
         redirectTo: 'setup'
