@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "title": "SpaCy NER",
+    "description": "Schema for spaCy NER Training",
+    "default": [],
+    "items": {
+        "type": "object",
+        "required": [
+            "content",
+            "annotation"
+        ],
+        "properties": {
+            "content": {
+                "type": "string"
+            },
+            "annotation": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "label",
+                        "points"
+                    ],
+                    "properties": {
+                        "label": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "points": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "text",
+                                    "start",
+                                    "end"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string"
+                                    },
+                                    "start": {
+                                        "type": "integer"
+                                    },
+                                    "end": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
