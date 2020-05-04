@@ -35,7 +35,7 @@ export class RouteGuard implements CanActivate {
             })
             return false;
           } else {
-            return false;
+            return true;
           }
         default:
           return true;

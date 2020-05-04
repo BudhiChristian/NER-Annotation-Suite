@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
+import { RouterStateSnapshot } from '@angular/router';
+import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -9,7 +12,8 @@ interface ExportInfo { data: any, filename: string, type: string }
   templateUrl: './export.component.html',
   styleUrls: ['./export.component.scss']
 })
-export class ExportComponent implements OnInit {
+export class ExportComponent extends VolatileComponent implements OnInit {
+  
   taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
   taggedOutputType: string = this.taggedOutputTypes[0];
   untaggedOutputTypes: string[] = ['txt'];
@@ -17,8 +21,15 @@ export class ExportComponent implements OnInit {
 
   constructor(
     private annotatedService: AnnotationDataService,
-    private snackbar: MatSnackBar
-  ) { }
+    private snackbar: MatSnackBar,
+    protected __dialog: MatDialog
+  ) { 
+    super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
+  }
+
+  protected hasUnsavedchanges(nextState: RouterStateSnapshot): UnsavedChange {
+    return new UnsavedChange(nextState.url != '/tool/annotate');
+  }
 
   ngOnInit() {
   }

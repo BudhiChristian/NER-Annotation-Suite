@@ -34,6 +34,7 @@ const routes: Routes = [
       }, {
         path: 'export',
         component: ExportComponent,
+        canDeactivate: [VolatileGuard],
         canActivate: [RouteGuard]
       }, {
         path: '**',
