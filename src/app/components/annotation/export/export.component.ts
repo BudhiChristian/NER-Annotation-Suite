@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
+import { JsonValidatorService } from 'src/app/services/json-validator.service';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -22,7 +23,8 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   constructor(
     private annotatedService: AnnotationDataService,
     private snackbar: MatSnackBar,
-    protected __dialog: MatDialog
+    protected __dialog: MatDialog,
+    private jsonValidator: JsonValidatorService
   ) { 
     super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
   }
