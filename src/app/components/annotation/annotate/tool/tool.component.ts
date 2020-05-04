@@ -31,6 +31,7 @@ export class ToolComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
     this.setStyle();
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
@@ -62,6 +63,10 @@ export class ToolComponent implements OnInit {
       return fullData[0];
     }
     return undefined;
+  }
+
+  get hasTagged(): boolean {
+    return this.annotationService.finisedTagged.length > 0;
   }
 
   next() {
