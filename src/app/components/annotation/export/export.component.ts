@@ -14,9 +14,10 @@ interface ExportInfo { data: any, filename: string, type: string }
   styleUrls: ['./export.component.scss']
 })
 export class ExportComponent extends VolatileComponent implements OnInit {
-  
+  saveTagged: boolean = true;
   taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
   taggedOutputType: string = this.taggedOutputTypes[0];
+  saveUntagged: boolean = true;
   untaggedOutputTypes: string[] = ['txt'];
   untaggedOutputType: string = this.untaggedOutputTypes[0];
 
@@ -45,13 +46,17 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   export() {
-    let taggedInfo: ExportInfo = this.exportTagged()
-    if (taggedInfo) {
-      this.save(taggedInfo)
+    if(this.saveTagged) {
+      let taggedInfo: ExportInfo = this.exportTagged()
+      if (taggedInfo) {
+        this.save(taggedInfo)
+      }
     }
-    let untaggedInfo: ExportInfo = this.exportUntagged()
-    if (untaggedInfo) {
-      this.save(untaggedInfo);
+    if(this.saveUntagged) {
+      let untaggedInfo: ExportInfo = this.exportUntagged()
+      if (untaggedInfo) {
+        this.save(untaggedInfo);
+      }
     }
 
   }

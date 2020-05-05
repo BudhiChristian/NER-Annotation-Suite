@@ -3,21 +3,27 @@
     <p>
         Select an option for exporting your data for training and for any remaining untagged data.
     </p>
+
+    <h3>Tagged Data</h3>
+    <mat-checkbox [checked]='saveTagged' (change)='saveTagged = $event.checked' color='primary'>include in export</mat-checkbox>
     <mat-form-field color='primary'>
         <mat-label>Tagged Data Output Type</mat-label>
-        <mat-select [(value)]='taggedOutputType'>
+        <mat-select [(value)]='taggedOutputType' [disabled]='!saveTagged'>
             <mat-option *ngFor='let opt of taggedOutputTypes' [value]='opt'>{{opt}}</mat-option>
         </mat-select>
         <mat-hint>{{numTagged}} Entries</mat-hint>
     </mat-form-field>
+
+    <h3>Untagged Data</h3>
+    <mat-checkbox [checked]='saveUntagged' (change)='saveUntagged = $event.checked' color='primary'>include in export</mat-checkbox>
     <mat-form-field color='primary'>
         <mat-label>Untagged Data Output Type</mat-label>
-        <mat-select [(value)]='untaggedOutputType'>
+        <mat-select [(value)]='untaggedOutputType' [disabled]='!saveUntagged'>
             <mat-option *ngFor='let opt of untaggedOutputTypes' [value]='opt'>{{opt}}</mat-option>
         </mat-select>
         <mat-hint>{{numUntagged}} Entries</mat-hint>
     </mat-form-field>
     <div class='export-button-container'>
-        <button mat-raised-button [disabled]='!taggedOutputType || !untaggedOutputType' (click)='export()' color='primary'>Export</button>
+        <button mat-raised-button [disabled]='!saveTagged && !saveUntagged' (click)='export()' color='primary'>Export</button>
     </div>
 </div>
