@@ -6,6 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./file-input.component.scss']
 })
 export class FileInputComponent implements OnInit {
+  @Input() disabled: boolean = false;
   @Input() accept = '';
   @Output("onFileSelect") onFileSelect: EventEmitter<string> = new EventEmitter<string>();
   

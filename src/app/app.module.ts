@@ -25,6 +25,9 @@ import { SentenceViewComponent } from './components/utils/sentence-view/sentence
 import { ToolComponent } from './components/annotation/annotate/tool/tool.component';
 import { TaggedEntityViewComponent } from './components/utils/tagged-entity-view/tagged-entity-view.component';
 import { EditEntityComponent } from './components/utils/tagged-entity-view/edit-entity/edit-entity.component';
+import { JsonValidatorService } from './services/json-validator.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ChooseAppendComponent } from './components/annotation/export/choose-append/choose-append.component';
 
 const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -46,7 +49,8 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     SentenceViewComponent,
     ToolComponent,
     TaggedEntityViewComponent,
-    EditEntityComponent
+    EditEntityComponent,
+    ChooseAppendComponent
   ],
   imports: [
     BrowserModule,
@@ -54,10 +58,12 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     BrowserAnimationsModule,
     FormsModule,
     CommonModule,
+    HttpClientModule,
     ...MATERIAL_IMPORTS
   ],
   providers: [
     AnnotationDataService,
+    JsonValidatorService,
     VolatileGuard
   ],
   entryComponents: [

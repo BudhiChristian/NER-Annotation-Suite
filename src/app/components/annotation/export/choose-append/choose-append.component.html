@@ -1,0 +1,4 @@
+<app-file-input [disabled]='disabled' [accept]='appendAccept[outputType]' (onFileSelect)='validate($event)'></app-file-input>
+<div *ngIf='message'>
+    <strong>Validation:</strong> {{message}}
+</div>
