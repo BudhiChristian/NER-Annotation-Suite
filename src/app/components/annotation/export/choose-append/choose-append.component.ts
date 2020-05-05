@@ -17,7 +17,7 @@ export class ChooseAppendComponent implements OnInit {
   @Input() outputType: string;
   @Output('onValidate') onValidate: EventEmitter<any> = new EventEmitter<any>();
 
-  message: string = '';
+  message: string = 'Choose base data to append to';
 
   readonly appendAccept: any = {
     'json (spaCy)': '.json',
@@ -71,7 +71,6 @@ export class ChooseAppendComponent implements OnInit {
   }
 
   validateCsv(text: string): ValidationParse {
-    console.log(text)
     return {
       data: text,
       isValid: true,

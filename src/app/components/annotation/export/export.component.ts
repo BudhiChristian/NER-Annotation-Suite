@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
+import { Papa } from 'ngx-papaparse'
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -26,9 +27,17 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   constructor(
     private annotatedService: AnnotationDataService,
     private snackbar: MatSnackBar,
-    protected __dialog: MatDialog
-  ) { 
+    protected __dialog: MatDialog,
+    private papa: Papa
+  ) {
     super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
+  }
+  
+  get canExport(): boolean {
+    if (this.saveTagged) {
+      return !this.appendToExisting || Boolean(this.appendData)
+    } 
+    return this.saveUntagged
   }
 
   protected hasUnsavedchanges(nextState: RouterStateSnapshot): UnsavedChange {
@@ -47,13 +56,13 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   export() {
-    if(this.saveTagged) {
+    if (this.saveTagged) {
       let taggedInfo: ExportInfo = this.exportTagged()
       if (taggedInfo) {
         this.save(taggedInfo)
       }
     }
-    if(this.saveUntagged) {
+    if (this.saveUntagged) {
       let untaggedInfo: ExportInfo = this.exportUntagged()
       if (untaggedInfo) {
         this.save(untaggedInfo);
@@ -76,7 +85,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   exportUntagged(): ExportInfo {
-    switch(this.untaggedOutputType) {
+    switch (this.untaggedOutputType) {
       case 'txt':
         return {
           data: this.annotatedService.getTaggedData().map(data => data.sentence).join('\n'),
@@ -123,19 +132,26 @@ export class ExportComponent extends VolatileComponent implements OnInit {
         }]
       }))
     }))
+    if (this.appendToExisting && this.appendData) {
+      this.appendData.push(...output);
+      output = this.appendData;
+    }
     return JSON.stringify(output, null, 4)
   }
 
   getCSVTagged() {
-    let output = this.getTokenSplit()
-      .map(line => line
-        .map(col => `"${col.replace('"', '""')}"`)
-        .join(','))
-      .join('\n');
-    return output;
+    let output = [];
+    if (this.appendToExisting && this.appendData) {
+      output.push(...this.papa.parse(this.appendData).data)
+    }
+
+    const sentenceCount = output.filter(row => row[0]).length
+    output.push(...this.getTokenSplit(sentenceCount))
+    
+    return this.papa.unparse(output);
   }
 
-  getTokenSplit(): string[][] {
+  getTokenSplit(numExisting): string[][] {
     let output: string[][] = [];
 
     this.annotatedService.finisedTagged.forEach((data, index) => {
@@ -143,7 +159,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
       for (let token of data.sentence.split(' ')) {
         let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end > startIndex)
         let line = [
-          startIndex == 0 ? `Senetence: ${index + 1}` : '',
+          startIndex == 0 ? `Senetence: ${numExisting + index + 1}` : '',
           token,
           (entities.length > 0) ? entities[0].tag.name : 'O'
         ]

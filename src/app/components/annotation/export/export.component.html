@@ -8,14 +8,14 @@
     <mat-checkbox [checked]='saveTagged' (change)='saveTagged = $event.checked' color='primary'>include in export</mat-checkbox>
     <mat-form-field color='primary'>
         <mat-label>Tagged Data Output Type</mat-label>
-        <mat-select [(value)]='taggedOutputType' [disabled]='!saveTagged'  (selectionChange)='appendToExisting = false'>
+        <mat-select [(value)]='taggedOutputType' [disabled]='!saveTagged'  (selectionChange)='appendToExisting = false; appendData = undefined;'>
             <mat-option *ngFor='let opt of taggedOutputTypes' [value]='opt'>{{opt}}</mat-option>
         </mat-select>
         <mat-hint>{{numTagged}} Entries</mat-hint>
     </mat-form-field>
     <div class='append-container'> 
-        <mat-checkbox [checked]='appendToExisting' (change)='appendToExisting = $event.checked' color='primary'>append to existing data</mat-checkbox>
-        <app-choose-append *ngIf='appendToExisting' [disabled]='!saveTagged ' [outputType]='taggedOutputType' (onValidate)='appendData = $event'></app-choose-append>
+        <mat-checkbox [checked]='appendToExisting' [disabled]='!saveTagged' (change)='appendToExisting = $event.checked' color='primary'>append to existing data</mat-checkbox>
+        <app-choose-append *ngIf='appendToExisting' [disabled]='!saveTagged' [outputType]='taggedOutputType' (onValidate)='appendData = $event'></app-choose-append>
     </div>
 
     <h3>Untagged Data</h3>
@@ -28,6 +28,6 @@
         <mat-hint>{{numUntagged}} Entries</mat-hint>
     </mat-form-field>
     <div class='export-button-container'>
-        <button mat-raised-button [disabled]='!saveTagged && !saveUntagged' (click)='export()' color='primary'>Export</button>
+        <button mat-raised-button [disabled]='!canExport' (click)='export()' color='primary'>Export</button>
     </div>
 </div>
