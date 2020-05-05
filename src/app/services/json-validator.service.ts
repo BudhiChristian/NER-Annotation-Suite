@@ -3,15 +3,18 @@ import * as AJV from 'ajv';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 
+export enum JSONSchemas {
+  SPACY = 'assets/schemas/spacy-schema.json'
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class JsonValidatorService {
-  readonly SPACY_SCHEMA = 'assets/schemas/spacy-schema.json';
-  
-  private readonly schemas = [
-    this.SPACY_SCHEMA
+export class JsonValidatorService {  
+  private readonly schemas: string[] = [
+    JSONSchemas.SPACY
   ]
+
   private validator: AJV.Ajv;
 
   constructor(private http: HttpClient) { 
