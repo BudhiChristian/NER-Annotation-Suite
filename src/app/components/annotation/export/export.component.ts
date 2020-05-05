@@ -4,7 +4,6 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
-import { JsonValidatorService } from 'src/app/services/json-validator.service';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -15,17 +14,19 @@ interface ExportInfo { data: any, filename: string, type: string }
 })
 export class ExportComponent extends VolatileComponent implements OnInit {
   saveTagged: boolean = true;
-  taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
+  readonly taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
   taggedOutputType: string = this.taggedOutputTypes[0];
+  appendToExisting: boolean = false;
+  appendData: any;
+
   saveUntagged: boolean = true;
-  untaggedOutputTypes: string[] = ['txt'];
+  readonly untaggedOutputTypes: string[] = ['txt'];
   untaggedOutputType: string = this.untaggedOutputTypes[0];
 
   constructor(
     private annotatedService: AnnotationDataService,
     private snackbar: MatSnackBar,
-    protected __dialog: MatDialog,
-    private jsonValidator: JsonValidatorService
+    protected __dialog: MatDialog
   ) { 
     super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
   }
