@@ -35,7 +35,12 @@ export class ToolComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
+    if(this.currentData) {
+      this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
+    } else {
+      this.previousSentence = this.annotationService.getTaggedData(true).length - 1;
+    }
+    
     this.setStyle();
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
