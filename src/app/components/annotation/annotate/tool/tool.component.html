@@ -31,20 +31,20 @@
         <div class='selected-details-container'>
             <div>
                 <h4>Start Index</h4>
-                {{start}}
+                {{hasSelected ? start : '-'}}
             </div>
             <div>
                 <h4>End Index</h4>
-                {{end}}
+                {{hasSelected ? end : '-'}}
             </div>
             <div>
                 <h4>Entity Tag</h4>
                 <mat-form-field>
                     <mat-label>Select Entity Tag</mat-label>
-                    <mat-select [disabled]='!hasSelected' [(value)]='entityTag'>
+                    <mat-select [disabled]='!entityTags || entityTags.length < 1' [(value)]='entityTag'>
                         <mat-option *ngFor='let tag of entityTags' [value]='tag'>{{tag.name}}</mat-option>
                     </mat-select>
-                    <mat-hint>Tags can be added to the right.</mat-hint>
+                    <mat-hint>Add entity tags to the right.</mat-hint>
                 </mat-form-field>
             </div>
         </div>

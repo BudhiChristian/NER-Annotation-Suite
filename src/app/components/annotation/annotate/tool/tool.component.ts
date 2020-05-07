@@ -27,7 +27,6 @@ export class ToolComponent implements OnInit {
     this.start = NaN;
     this.end = NaN;
     this.sub = undefined;
-    this.entityTag = undefined;
   }
 
   ngOnInit() {
