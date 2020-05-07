@@ -3,6 +3,9 @@ import { TaggedData } from 'src/app/domain/tagged-data.domain';
 import { AnnotationDataService } from 'src/app/services/annotation-data.service';
 import { EntityTag } from 'src/app/domain/entity-tag.domain';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { ConfirmationModalComponent } from 'src/app/components/utils/confirmation-modal/confirmation-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tool',
@@ -20,18 +23,24 @@ export class ToolComponent implements OnInit {
   __entityTagListChanges: Subscription;
 
   constructor(
-    private annotationService: AnnotationDataService
+    private annotationService: AnnotationDataService,
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   private reset() {
     this.start = NaN;
     this.end = NaN;
     this.sub = undefined;
-    this.entityTag = undefined;
   }
 
   ngOnInit() {
-    this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
+    if(this.currentData) {
+      this.previousSentence = this.annotationService.getTaggedData(true).indexOf(this.currentData) - 1;
+    } else {
+      this.previousSentence = this.annotationService.getTaggedData(true).length - 1;
+    }
+    
     this.setStyle();
     this.__entityTagListChanges = this.annotationService.entityTagChanges.subscribe(() => {
       this.setStyle();
@@ -137,4 +146,30 @@ export class ToolComponent implements OnInit {
     return arr;
   }
 
+
+  finishSession() {
+    if(this.currentData) {
+      this.dialog.open(ConfirmationModalComponent, {
+        width: '300px',
+        autoFocus: false,
+        restoreFocus: false,
+        data: {
+          title: "Stage Not Empty",
+          message: "There appears to be a sentence on the annotation stage. Do you wish to include this as annoted data? If not the staged sentence will be marked as unannotated.",
+          confirm: "Yes",
+          cancel: "No"
+        }
+      }).afterClosed().subscribe(res => {
+        if(typeof res !== "boolean") {
+          return
+        }
+        if(res) {
+          this.currentData.touch()
+        }
+        this.router.navigate(['/tool', 'export'])
+      })
+    } else {
+      this.router.navigate(['/tool', 'export'])
+    }
+  }
 }
