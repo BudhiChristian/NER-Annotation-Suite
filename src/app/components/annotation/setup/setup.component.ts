@@ -18,28 +18,25 @@ export class SetupComponent extends VolatileComponent implements OnInit {
     private annotationService: AnnotationDataService,
     protected __dialog: MatDialog
   ) {
-    super(__dialog, 'Changes Detected',
-      'Changes have been detected in the setup form. Leaving this page will result in lost work. Do you wish to continue?');
+    super(__dialog, 'Session Warning',
+      'Leaving this page will result in lost work. Do you wish to continue?');
     this.annotationService.touchSetup();
   }
 
   protected hasUnsavedchanges(nextState: RouterStateSnapshot): UnsavedChange {
-    if (this.inputType == this.INPUT_TYPES[0] && this.annotationService.entityTags.length < 1) {
-      return new UnsavedChange(false);
-    }
-
     if (nextState.url == '/tool/annotate') {
-      if(this.lines.length > 0) {
-        return new UnsavedChange(false);
-      } else {
-        return new UnsavedChange(true, {
+      switch(this.inputType){
+        case this.INPUT_TYPES[0]:
+          return new UnsavedChange(false);
+        default:
+          return new UnsavedChange(this.lines.length < 1, {
           customTitle: 'Form Incomplete',
           customMessage: 'Setup form is incomplete. Continuing to the annotation phase will result in an empty list of sentences to annotate from the start. Do you wish to continue?'
         })
       }
+    } else {
+      return new UnsavedChange(this.inputType != this.INPUT_TYPES[0] || this.annotationService.entityTags.length > 0)
     }
-    
-    return new UnsavedChange(true);
   }
 
   ngOnInit() {
