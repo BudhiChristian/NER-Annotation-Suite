@@ -43,6 +43,10 @@ const routes: Routes = [
     ]
   }, {
     path: 'documentation',
+    redirectTo: 'documentation/',
+    pathMatch: 'full'
+  }, {
+    path: 'documentation/:section',
     component: DocumentationComponent
   }, {
     path: '**',
