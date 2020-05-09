@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DocumentationFetchService } from 'src/app/services/documentation-fetch.service';
 
 @Component({
   selector: 'app-documentation',
@@ -8,13 +9,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./documentation.component.scss']
 })
 export class DocumentationComponent implements OnInit {
-  section: string = ''
+  section: string = '';
   private __subscribers: Subscription[] = [];
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private documentation: DocumentationFetchService
   ) {
     this.__subscribers.push(this.route.paramMap.subscribe(params => {
-      this.section = params.get('section') || 'introduction'
+      this.section = params.get('section') || 'introduction';
     }))
   }
 
@@ -23,6 +25,9 @@ export class DocumentationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.documentation.tableOfContents.subscribe(res => {
+      console.log(res)
+    })
   }
 
 }
