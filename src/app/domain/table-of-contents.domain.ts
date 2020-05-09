@@ -5,5 +5,5 @@ export interface TableOfContents {
 
 export interface ContentInfo {
     title: string;
-    link: string;
+    url: string;
 }
