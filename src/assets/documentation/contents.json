@@ -2,8 +2,10 @@
     "sections": [
         "introduction"
     ],
-    "introduction": {
-        "title": "Introductions",
-        "link": "assets/documentation/sections"
+    "details": {
+        "introduction": {
+            "title": "Introductions",
+            "link": "assets/documentation/sections"
+        }
     }
 }
