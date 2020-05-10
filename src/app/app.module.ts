@@ -26,8 +26,9 @@ import { ToolComponent } from './components/annotation/annotate/tool/tool.compon
 import { TaggedEntityViewComponent } from './components/utils/tagged-entity-view/tagged-entity-view.component';
 import { EditEntityComponent } from './components/utils/tagged-entity-view/edit-entity/edit-entity.component';
 import { JsonValidatorService } from './services/json-validator.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ChooseAppendComponent } from './components/annotation/export/choose-append/choose-append.component';
+import { MarkdownModule } from 'ngx-markdown'
 
 const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -59,6 +60,9 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     FormsModule,
     CommonModule,
     HttpClientModule,
+    MarkdownModule.forRoot(
+      { loader: HttpClient }
+    ),
     ...MATERIAL_IMPORTS
   ],
   providers: [

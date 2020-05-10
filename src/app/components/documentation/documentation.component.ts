@@ -11,6 +11,7 @@ import { TableOfContents } from 'src/app/domain/table-of-contents.domain';
 })
 export class DocumentationComponent implements OnInit {
   section: string = '';
+  sectionUrl: string = 'assets/documentation/sections/not-found.md';
 
   private __subscribers: Subscription[] = [];
   constructor(
@@ -21,7 +22,14 @@ export class DocumentationComponent implements OnInit {
   ngOnInit() {
     this.documentation.initialize().subscribe(_ => {
       this.__subscribers.push(this.route.paramMap.subscribe(params => {
-        this.section = params.get('section') || 'introduction';
+        const param = params.get('section') || 'introduction';
+        if(this.tableOfContents.sections.includes(param)) {
+          this.section = param
+          this.sectionUrl = this.tableOfContents.details[param].url;
+        } else {
+          this.section = 'not-found'
+          this.sectionUrl = 'assets/documentation/sections/not-found.md';
+        }
       }))
     })
   }

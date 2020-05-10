@@ -5,7 +5,8 @@
     "details": {
         "introduction": {
             "title": "Introductions",
-            "url": "assets/documentation/sections"
+            "url": "assets/documentation/sections/introduction.md",
+            "sections": []
         }
     }
 }
