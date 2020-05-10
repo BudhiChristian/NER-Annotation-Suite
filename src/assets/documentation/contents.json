@@ -1,0 +1,12 @@
+{
+    "sections": [
+        "introduction"
+    ],
+    "details": {
+        "introduction": {
+            "title": "Introductions",
+            "url": "assets/documentation/sections/introduction.md",
+            "sectionIds": []
+        }
+    }
+}

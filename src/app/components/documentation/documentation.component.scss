@@ -1,0 +1,27 @@
+.documentation-container {
+    overflow: auto;
+    height: 100%;
+}
+.section-contents {
+    max-width: 1000px;
+    min-width: 600px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+.ngx-markdown-image {
+    max-width: 600px;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+}
+
+.ngx-markdown-described-image {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ngx-markdown-described-image>.ngx-markdown-image {
+    max-width: 600px;
+}
