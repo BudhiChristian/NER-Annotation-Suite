@@ -13,4 +13,15 @@
     max-width: 600px;
     display: block;
     margin: 0 auto;
+    border: 1px solid #ccc;
+}
+
+.ngx-markdown-described-image {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ngx-markdown-described-image>.ngx-markdown-image {
+    max-width: 600px;
 }
