@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DocumentationFetchService } from 'src/app/services/documentation-fetch.service';
@@ -7,7 +7,8 @@ import { TableOfContents } from 'src/app/domain/table-of-contents.domain';
 @Component({
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.scss']
+  styleUrls: ['./documentation.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DocumentationComponent implements OnInit {
   section: string = '';

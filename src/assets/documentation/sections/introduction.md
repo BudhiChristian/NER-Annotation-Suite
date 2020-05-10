@@ -15,6 +15,9 @@ def test():
 ## sub section
 
 ![sample image](https://christian-budhi-hosting.s3.amazonaws.com/portfolio/ner-annotation-suite.PNG)
+*description*
+
+
 ![sample image][sampleImage]
 
 [sampleImage]: https://christian-budhi-hosting.s3.amazonaws.com/portfolio/ner-annotation-suite.PNG

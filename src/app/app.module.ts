@@ -28,7 +28,8 @@ import { EditEntityComponent } from './components/utils/tagged-entity-view/edit-
 import { JsonValidatorService } from './services/json-validator.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ChooseAppendComponent } from './components/annotation/export/choose-append/choose-append.component';
-import { MarkdownModule } from 'ngx-markdown'
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
+import { MarkOptionsFactory } from './markdown-factory';
 
 const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -61,7 +62,13 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     CommonModule,
     HttpClientModule,
     MarkdownModule.forRoot(
-      { loader: HttpClient }
+      { 
+        loader: HttpClient,
+        markedOptions: {
+          provide: MarkedOptions,
+          useFactory: MarkOptionsFactory
+        }
+      }
     ),
     ...MATERIAL_IMPORTS
   ],
