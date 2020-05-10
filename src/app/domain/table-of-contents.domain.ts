@@ -6,4 +6,5 @@ export interface TableOfContents {
 export interface ContentInfo {
     title: string;
     url: string;
+    sectionIds: string[];
 }

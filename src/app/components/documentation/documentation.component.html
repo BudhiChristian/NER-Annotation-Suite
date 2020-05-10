@@ -1,4 +1,9 @@
 <div class='documentation-container'>
-    <div markdown class="section-contents" [src]='sectionUrl'>
+    <div class="section-contents">
+        <markdown [src]='sectionUrl'>
+        </markdown>
+        <div *ngIf='section == "not-found"' style='text-align: center;'>
+            <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
+        </div>
     </div>
 </div>

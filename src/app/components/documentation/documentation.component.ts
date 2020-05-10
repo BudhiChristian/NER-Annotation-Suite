@@ -12,7 +12,7 @@ import { TableOfContents } from 'src/app/domain/table-of-contents.domain';
 })
 export class DocumentationComponent implements OnInit {
   section: string = '';
-  sectionUrl: string = 'assets/documentation/sections/not-found.md';
+  sectionUrl: string = 'assets/documentation/sections/loading.md';
 
   private __subscribers: Subscription[] = [];
   constructor(

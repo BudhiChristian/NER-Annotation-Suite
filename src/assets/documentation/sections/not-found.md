@@ -1,3 +1,3 @@
 # Section Not Found
 
-oops
+Looks like you attempted to access documentation that doesn't exist.
