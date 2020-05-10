@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TableOfContents } from '../domain/table-of-contents.domain';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +13,16 @@ export class DocumentationFetchService {
 
   constructor(
     private http: HttpClient
-  ) { 
+  ) { }
+
+  initialize(): Observable<TableOfContents> {
     this.__showLoader = true;
-    this.http.get<TableOfContents>("assets/documentation/contents.json")
+    return this.http.get<TableOfContents>("assets/documentation/contents.json")
       .pipe(finalize(() => {
         this.__showLoader = false;
-      })).subscribe((toc: TableOfContents) => {
+      }), tap((toc: TableOfContents) => {
         this.__tableOfContents = toc;
-      })
+      }));
   }
 
   get showLoader(): boolean {

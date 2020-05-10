@@ -19,10 +19,11 @@ export class DocumentationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.__subscribers.push(this.route.paramMap.subscribe(params => {
-      this.section = params.get('section') || 'introduction';
-      console.log(this.section)
-    }))
+    this.documentation.initialize().subscribe(_ => {
+      this.__subscribers.push(this.route.paramMap.subscribe(params => {
+        this.section = params.get('section') || 'introduction';
+      }))
+    })
   }
 
   ngOnDestroy() {
