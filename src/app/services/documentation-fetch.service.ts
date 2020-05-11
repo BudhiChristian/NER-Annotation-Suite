@@ -17,7 +17,7 @@ export class DocumentationFetchService {
 
   initialize(): Observable<TableOfContents> {
     this.__showLoader = true;
-    return this.http.get<TableOfContents>("assets/documentation/contents.json")
+    return this.http.get<TableOfContents>("https://raw.githubusercontent.com/BudhiChristian/ner-annotation-suite-docs/master/contents.json")
       .pipe(finalize(() => {
         this.__showLoader = false;
       }), tap((toc: TableOfContents) => {

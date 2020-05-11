@@ -1,8 +1,49 @@
 <div class='documentation-container'>
-    <div class="section-contents">
-        <markdown [src]='sectionUrl'>
-        </markdown>
-        <div *ngIf='section == "not-found"' style='text-align: center;'>
+    <div class='table-of-contents'>
+        <ng-container *ngIf='tableOfContents?.sections?.length > 0'>
+            <div *ngFor='let section of tableOfContents.sections'>
+                <div style='display: flex;'>
+                    <button class='section-button' mat-button
+                        [routerLink]='["/documentation", section]' 
+                        [class.active-route]='section == activeSection'
+                        (click)='handleSectionSelect(section)'>
+                        {{tableOfContents.details[section].title}}
+                    </button>
+                    <button mat-icon-button 
+                        (click)='handleCollapse(section)'
+                        [disabled]='!tableOfContents.details[section]?.sectionIds?.length'>
+                        <mat-icon *ngIf='tableOfContents.details[section]?.sectionIds?.length'>
+                            {{(getSectionSubMenu(section)?.style?.display=="none")?'expand_less':'expand_more'}}
+                        </mat-icon>
+                    </button>
+                </div>
+                <div class='sub-section-controls' 
+                    [id]='section+"-sub"'
+                    *ngIf='tableOfContents.details[section]?.sectionIds?.length'>
+                    <button class='sub-section-button' mat-button 
+                        *ngFor='let subsect of tableOfContents.details[section].sectionIds' 
+                        [routerLink]='["/documentation", section]' 
+                        [fragment]='subsect | fragmentFormat'
+                        (click)='scrollToFragment(subsect)'>
+                        {{subsect}}
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class='section-contents-container'>
+        <div id='top'></div>
+        <div *ngIf='loading' style='margin: 0.5rem'>
+            loading...
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div *ngIf='!loading && activeSection != "not-found"' class='section-contents'>
+            <markdown [src]='sectionUrl' (load)='handleDocumentLoad()'>
+            </markdown>
+        </div>
+        <div *ngIf='!loading && activeSection == "not-found"' style='text-align: center;'>
+            <h2>Section Not Found</h2>
+            <p>Looks like you attempted to access documentation that doesn't exist.</p>
             <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
         </div>
     </div>

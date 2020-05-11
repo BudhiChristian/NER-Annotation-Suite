@@ -1,9 +1,56 @@
+@import 'src/custom-theme.scss';
+
 .documentation-container {
-    overflow: auto;
     height: 100%;
+
+    min-width: 900px;
+    display: flex;
+    flex-direction: row;
 }
+
+.table-of-contents {
+    flex: 0 0 300px;
+    border-right: 1px solid mat-color($accent, default);
+    overflow: auto;
+
+    background-color: mat-color($accent, lighter);
+    color: mat-color($accent, lighter-contrast);
+}
+
+.section-button {
+    text-align: left;
+    flex: 1 1 auto;
+}
+
+.sub-section-controls {
+    display: flex; 
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sub-section-button {
+    padding-left: 3rem;
+    text-align: left;
+    flex: 1 1 auto;
+}
+
+.table-of-contents>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.active-route {
+    font-weight: bold;
+}
+
+.section-contents-container {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
 .section-contents {
-    max-width: 1000px;
+
+    max-width: 1200px;
     min-width: 600px;
     margin: 0 auto;
     padding: 0 0.5rem;
@@ -13,7 +60,7 @@
     max-width: 600px;
     display: block;
     margin: 0 auto;
-    border: 1px solid #ccc;
+    border: 1px solid mat-color($accent, default);
 }
 
 .ngx-markdown-described-image {
