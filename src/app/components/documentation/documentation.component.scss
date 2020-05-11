@@ -16,12 +16,27 @@
     background-color: mat-color($accent, lighter);
     color: mat-color($accent, lighter-contrast);
 }
+
+.table-of-contents>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.active-route {
+    font-weight: bold;
+}
+
+.section-contents-container {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
 .section-contents {
+
     max-width: 1200px;
     min-width: 600px;
     margin: 0 auto;
     padding: 0 0.5rem;
-    overflow: auto;
 }
 
 .ngx-markdown-image {

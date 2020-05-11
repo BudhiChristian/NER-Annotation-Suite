@@ -1,12 +1,31 @@
 <div class='documentation-container'>
     <div class='table-of-contents'>
-
+        <ng-container *ngIf='tableOfContents?.sections?.length > 0'>
+            <div *ngFor='let section of tableOfContents.sections'>
+                <button mat-button 
+                    [routerLink]='["/documentation", section]' 
+                    [class.active-route]='section == activeSection'
+                    (click)='scrollToFragment("top")'>
+                    {{tableOfContents.details[section].title}}
+                </button>
+                <ng-container *ngIf='tableOfContents.details[section]?.sectionIds?.length'>
+                    <button mat-button *ngFor='let subsect of tableOfContents.details[section].sectionIds' 
+                        [routerLink]='["/documentation", section]' 
+                        [fragment]='subsect | fragmentFormat'
+                        (click)='scrollToFragment(subsect)'>
+                        {{subsect}}
+                    </button>
+                </ng-container>
+            </div>
+        </ng-container>
     </div>
-    <div class='section-contents'>
-        <markdown [src]='sectionUrl'>
-        </markdown>
-        <div *ngIf='section == "not-found"' style='text-align: center;'>
-            <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
+    <div class='section-contents-container'>
+        <div id='top' class='section-contents'>
+            <markdown [src]='sectionUrl' (load)='handleDocumentLoad()'>
+            </markdown>
+            <div *ngIf='activeSection == "not-found"' style='text-align: center;'>
+                <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
+            </div>
         </div>
     </div>
 </div>

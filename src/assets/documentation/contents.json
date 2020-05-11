@@ -1,12 +1,21 @@
 {
     "sections": [
-        "introduction"
+        "introduction",
+        "sample-doc"
     ],
     "details": {
         "introduction": {
             "title": "Introductions",
             "url": "assets/documentation/sections/introduction.md",
             "sectionIds": []
+        },
+        "sample-doc": {
+            "title": "Sample Doc Page",
+            "url": "assets/documentation/sections/sample-doc.md",
+            "sectionIds": [
+                "Subsection 1",
+                "Subsection 2"
+            ]
         }
     }
 }

@@ -30,6 +30,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ChooseAppendComponent } from './components/annotation/export/choose-append/choose-append.component';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
 import { MarkOptionsFactory } from './markdown-factory';
+import { FragmentFormatPipe } from './pipes/fragment-format.pipe';
 
 const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
@@ -52,7 +53,8 @@ const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatT
     ToolComponent,
     TaggedEntityViewComponent,
     EditEntityComponent,
-    ChooseAppendComponent
+    ChooseAppendComponent,
+    FragmentFormatPipe
   ],
   imports: [
     BrowserModule,
