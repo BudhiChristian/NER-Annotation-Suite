@@ -33,12 +33,18 @@
     </div>
     <div class='section-contents-container'>
         <div id='top'></div>
-        <div class='section-contents'>
+        <div *ngIf='loading' style='margin: 0.5rem'>
+            loading...
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div *ngIf='!loading && activeSection != "not-found"' class='section-contents'>
             <markdown [src]='sectionUrl' (load)='handleDocumentLoad()'>
             </markdown>
-            <div *ngIf='activeSection == "not-found"' style='text-align: center;'>
-                <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
-            </div>
+        </div>
+        <div *ngIf='!loading && activeSection == "not-found"' style='text-align: center;'>
+            <h2>Section Not Found</h2>
+            <p>Looks like you attempted to access documentation that doesn't exist.</p>
+            <button mat-raised-button color='primary' routerLink='/documentation'>Go To Documentation</button>
         </div>
     </div>
 </div>

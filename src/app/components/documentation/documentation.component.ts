@@ -13,7 +13,7 @@ import { FragmentFormatPipe } from 'src/app/pipes/fragment-format.pipe';
 })
 export class DocumentationComponent implements OnInit {
   activeSection: string = '';
-  sectionUrl: string = 'assets/documentation/sections/loading.md';
+  sectionUrl: string = '';
 
   private fragmentPipe: FragmentFormatPipe = new FragmentFormatPipe()
   private __subscribers: Subscription[] = [];
@@ -31,7 +31,6 @@ export class DocumentationComponent implements OnInit {
           this.sectionUrl = this.tableOfContents.details[param].url;
         } else {
           this.activeSection = 'not-found'
-          this.sectionUrl = 'assets/documentation/sections/not-found.md';
         }
       }))
     })

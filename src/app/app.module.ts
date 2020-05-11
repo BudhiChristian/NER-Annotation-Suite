@@ -7,7 +7,7 @@ import { AboutComponent } from './components/about/about.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
+import { MatProgressBarModule, MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
 import { SetupComponent } from './components/annotation/setup/setup.component';
 import { AnnotateComponent } from './components/annotation/annotate/annotate.component';
 import { ExportComponent } from './components/annotation/export/export.component';
@@ -32,7 +32,7 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
 import { MarkOptionsFactory } from './markdown-factory';
 import { FragmentFormatPipe } from './pipes/fragment-format.pipe';
 
-const MATERIAL_IMPORTS = [ MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
+const MATERIAL_IMPORTS = [ MatProgressBarModule, MatSortModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatDialogModule, MatSnackBarModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, MatFormFieldModule ];
 
 @NgModule({
   declarations: [
