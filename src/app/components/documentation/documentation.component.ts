@@ -55,6 +55,30 @@ export class DocumentationComponent implements OnInit {
     this.scrollToFragment(frag)
   }
 
+  handleSectionSelect(section) {
+    this.scrollToFragment('top')
+    let elem = this.getSectionSubMenu(section)
+    if (elem) {
+      elem.style.display = 'flex'
+    }
+  }
+
+  handleCollapse(section) {
+    let elem = this.getSectionSubMenu(section)
+    if (elem) {
+      if (elem.style.display == 'none') {
+        elem.style.display = 'flex'
+      } else {
+        elem.style.display = 'none'
+      }
+
+    }
+  }
+
+  getSectionSubMenu(section) {
+    return document.getElementById(section + "-sub")
+  }
+
   ngOnDestroy() {
     this.__subscribers.forEach(sub => sub.unsubscribe());
   }

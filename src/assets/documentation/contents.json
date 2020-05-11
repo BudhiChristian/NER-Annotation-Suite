@@ -5,7 +5,7 @@
     ],
     "details": {
         "introduction": {
-            "title": "Introductions",
+            "title": "Introduction",
             "url": "assets/documentation/sections/introduction.md",
             "sectionIds": []
         },
@@ -14,7 +14,9 @@
             "url": "assets/documentation/sections/sample-doc.md",
             "sectionIds": [
                 "Subsection 1",
-                "Subsection 2"
+                "Subsection 2",
+                "Subsection 3",
+                "Subsection 4"
             ]
         }
     }

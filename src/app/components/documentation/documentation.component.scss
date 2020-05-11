@@ -17,6 +17,23 @@
     color: mat-color($accent, lighter-contrast);
 }
 
+.section-button {
+    text-align: left;
+    flex: 1 1 auto;
+}
+
+.sub-section-controls {
+    display: flex; 
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sub-section-button {
+    padding-left: 3rem;
+    text-align: left;
+    flex: 1 1 auto;
+}
+
 .table-of-contents>div {
     display: flex;
     flex-direction: column;
