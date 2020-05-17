@@ -3,11 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TableOfContents } from '../domain/table-of-contents.domain';
 import { finalize, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentationFetchService {
+  private readonly base = environment.documentation.base;
+  private readonly toc = environment.documentation.tableOfContents;
+
   private __showLoader: boolean = true;
   private __tableOfContents: TableOfContents;
 
@@ -17,7 +21,7 @@ export class DocumentationFetchService {
 
   initialize(): Observable<TableOfContents> {
     this.__showLoader = true;
-    return this.http.get<TableOfContents>("https://raw.githubusercontent.com/BudhiChristian/ner-annotation-suite-docs/master/contents.json")
+    return this.http.get<TableOfContents>(this.base+this.toc)
       .pipe(finalize(() => {
         this.__showLoader = false;
       }), tap((toc: TableOfContents) => {
@@ -33,11 +37,7 @@ export class DocumentationFetchService {
     return this.__tableOfContents;
   }
 
-  getSection(section: string): Observable<any> {
-    this.__showLoader = true;
-    const url = this.__tableOfContents.details[section].url;
-    return this.http.get<any>(url).pipe(finalize(() => {
-      this.__showLoader = false;
-    }))
+  getSectionUrl(section: string): string {
+    return this.base + this.tableOfContents.details[section].url
   }
 }

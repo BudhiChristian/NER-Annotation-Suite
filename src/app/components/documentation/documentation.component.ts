@@ -28,7 +28,7 @@ export class DocumentationComponent implements OnInit {
         const param = params.get('section') || 'introduction';
         if (this.tableOfContents.sections.includes(param)) {
           this.activeSection = param
-          this.sectionUrl = this.tableOfContents.details[param].url;
+          this.sectionUrl = this.documentation.getSectionUrl(param)
         } else {
           this.activeSection = 'not-found'
         }
