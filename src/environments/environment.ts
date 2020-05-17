@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   documentation: {
-      base: "http://localhost:8887/",
-      tableOfContents: "contents.json"
+    base: "https://raw.githubusercontent.com/BudhiChristian/ner-annotation-suite-docs/master/",
+    tableOfContents: "contents.json"
   }
 };
