@@ -20,7 +20,7 @@ export class ChooseAppendComponent implements OnInit {
   message: string = 'Choose base data to append to';
 
   readonly appendAccept: any = {
-    'json (spaCy)': '.json',
+    'json': '.json',
     'csv': '.csv'
   }
 
@@ -36,8 +36,8 @@ export class ChooseAppendComponent implements OnInit {
     reader.onload = (r: any) => {
       let res: ValidationParse;
       switch(this.outputType) {
-        case 'json (spaCy)': 
-          res = this.validateSpacy(r.target.result);
+        case 'json': 
+          res = this.validateGeneralJSON(r.target.result);
           break;
         case 'csv':
           res = this.validateCsv(r.target.result);
@@ -60,9 +60,9 @@ export class ChooseAppendComponent implements OnInit {
     reader.readAsText(file);
   }
 
-  validateSpacy(text: string): ValidationParse {
+  validateGeneralJSON(text: string): ValidationParse {
     let parsedJson = JSON.parse(text);
-    let validation = this.jsonValidator.validateData(JSONSchemas.SPACY, parsedJson)
+    let validation = this.jsonValidator.validateData(JSONSchemas.GENERAL, parsedJson)
     return {
       data: parsedJson,
       isValid: validation.isValid,

@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "title": "Genral NER Format",
+    "description": "Schema for Genral NER Training",
+    "default": [],
+    "items": {
+        "type": "object",
+        "required": [
+            "content",
+            "entities"
+        ],
+        "properties": {
+            "content": {
+                "type": "string"
+            },
+            "entities": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "text",
+                        "label",
+                        "start",
+                        "end"
+                    ],
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "text": {
+                            "type": "string"
+                        },
+                        "start": {
+                            "type": "integer"
+                        },
+                        "end": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

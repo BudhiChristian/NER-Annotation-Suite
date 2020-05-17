@@ -15,7 +15,7 @@ interface ExportInfo { data: any, filename: string, type: string }
 })
 export class ExportComponent extends VolatileComponent implements OnInit {
   saveTagged: boolean = true;
-  readonly taggedOutputTypes: string[] = ['json (spaCy)', 'csv']//, 'tsv'];
+  readonly taggedOutputTypes: string[] = ['json', 'csv'];
   taggedOutputType: string = this.taggedOutputTypes[0];
   appendToExisting: boolean = false;
   appendData: any;
@@ -70,7 +70,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     }
 
   }
-  save(info: ExportInfo) {
+  private save(info: ExportInfo) {
     var file = new Blob([info.data], { type: info.type });
     let a = document.createElement('a');
     let url = URL.createObjectURL(file);
@@ -84,7 +84,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     }, 0);
   }
 
-  exportUntagged(): ExportInfo {
+  private exportUntagged(): ExportInfo {
     switch (this.untaggedOutputType) {
       case 'txt':
         return {
@@ -99,9 +99,9 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     }
   }
 
-  exportTagged(): ExportInfo {
+  private exportTagged(): ExportInfo {
     switch (this.taggedOutputType) {
-      case 'json (spaCy)':
+      case 'json':
         return {
           data: this.getSpacyTagged(),
           filename: 'tagged-data.json',
@@ -120,16 +120,14 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     }
   }
 
-  getSpacyTagged() {
+  private getSpacyTagged() {
     let output = this.annotatedService.finisedTagged.map(data => ({
       content: data.sentence,
-      annotation: data.entities.map(entity => ({
-        label: [entity.tag.name],
-        points: [{
-          text: entity.text,
-          start: entity.start,
-          end: entity.end
-        }]
+      entities: data.entities.map(entity => ({
+        text: entity.text,
+        label: entity.tag.name,
+        start: entity.start,
+        end: entity.end
       }))
     }))
     if (this.appendToExisting && this.appendData) {
@@ -139,7 +137,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     return JSON.stringify(output, null, 4)
   }
 
-  getCSVTagged() {
+  private getCSVTagged() {
     let output = [];
     if (this.appendToExisting && this.appendData) {
       output.push(...this.papa.parse(this.appendData).data)
@@ -151,7 +149,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     return this.papa.unparse(output);
   }
 
-  getTokenSplit(numExisting): string[][] {
+  private getTokenSplit(numExisting): string[][] {
     let output: string[][] = [];
 
     this.annotatedService.finisedTagged.forEach((data, index) => {

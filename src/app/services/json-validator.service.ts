@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 
 export enum JSONSchemas {
-  SPACY = 'assets/schemas/spacy-schema.json'
+  GENERAL = 'assets/schemas/general-schema.json'
 }
 
 @Injectable({
@@ -12,7 +12,7 @@ export enum JSONSchemas {
 })
 export class JsonValidatorService {  
   private readonly schemas: string[] = [
-    JSONSchemas.SPACY
+    JSONSchemas.GENERAL
   ]
 
   private validator: AJV.Ajv;
