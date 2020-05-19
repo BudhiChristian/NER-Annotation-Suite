@@ -30,10 +30,16 @@ export class DocumentationComponent implements OnInit {
           this.activeSection = param
           this.sectionUrl = this.documentation.getSectionUrl(param)
         } else {
-          this.activeSection = 'not-found'
+          this.setNotFound();
         }
       }))
+    }, err => {
+      this.setNotFound();
     })
+  }
+
+  setNotFound() {
+    this.activeSection = 'not-found';
   }
 
   scrollToFragment(frag: string) {
