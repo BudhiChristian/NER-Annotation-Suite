@@ -5,7 +5,7 @@ import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 import { Papa } from 'ngx-papaparse'
-import { getAdditionalTagMap, positionalTagOptions } from './export.utility';
+import { positionalTagOptions, getPositionalTagFormat } from './export.utility';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -167,30 +167,10 @@ export class ExportComponent extends VolatileComponent implements OnInit {
       for (let token of data.sentence.split(' ')) {
         let endIndex = startIndex + token.length;
         let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex)
-        
-        let tagMap = getAdditionalTagMap(this.additionalTaggingType)
-        let entity = tagMap['O']
-        if (entities.length > 0) {
-          let e = entities[0]
-          if (this.additionalTaggingType == this.additionalTaggingTypes[0]) {
-            entity = e.tag.name;
-          } else {
-            if(e.start == startIndex && e.end == endIndex) {
-              entity = `${tagMap['U']}-${e.tag.name}`;
-            } else if (e.start == startIndex) {
-              entity = `${tagMap['B']}-${e.tag.name}`;
-            } else if (e.end == endIndex) {
-              entity = `${tagMap['L']}-${e.tag.name}`;
-            } else {
-              entity = `${tagMap['I']}-${e.tag.name}`;
-            }
-          }
-        }
-
         let line = [
           startIndex == 0 ? `Senetence: ${numExisting + index + 1}` : '',
           token,
-          entity
+          getPositionalTagFormat(entities.length > 0 && entities[0], startIndex, endIndex, this.additionalTaggingType)
         ]
         output.push(line);
         startIndex += (token.length + 1)
