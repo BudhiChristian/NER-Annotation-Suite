@@ -5,6 +5,7 @@ import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 import { Papa } from 'ngx-papaparse'
+import { getAdditionalTagMap, positionalTagOptions } from './export.utility';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -19,6 +20,8 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   taggedOutputType: string = this.taggedOutputTypes[0];
   appendToExisting: boolean = false;
   appendData: any;
+  readonly additionalTaggingTypes: string[] = positionalTagOptions
+  additionalTaggingType:string = this.additionalTaggingTypes[0];
 
   saveUntagged: boolean = true;
   readonly untaggedOutputTypes: string[] = ['txt'];
@@ -121,15 +124,22 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   private getSpacyTagged() {
-    let output = this.annotatedService.finisedTagged.map(data => ({
-      content: data.sentence,
-      entities: data.entities.map(entity => ({
-        text: entity.text,
-        label: entity.tag.name,
-        start: entity.start,
-        end: entity.end
-      }))
-    }))
+    let output = this.annotatedService.finisedTagged.map(data =>{
+      let entities = [];
+      for (let entity of data.entities) {
+        //TODO Process BILOU
+      }
+
+      return {
+        content: data.sentence,
+        entities: data.entities.map(entity => ({
+          text: entity.text,
+          label: entity.tag.name,
+          start: entity.start,
+          end: entity.end
+        }))
+      }
+    });
     if (this.appendToExisting && this.appendData) {
       this.appendData.push(...output);
       output = this.appendData;
@@ -157,18 +167,23 @@ export class ExportComponent extends VolatileComponent implements OnInit {
       for (let token of data.sentence.split(' ')) {
         let endIndex = startIndex + token.length;
         let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex)
-
-        let entity = 'O'
+        
+        let tagMap = getAdditionalTagMap(this.additionalTaggingType)
+        let entity = tagMap['O']
         if (entities.length > 0) {
           let e = entities[0]
-          if(e.start == startIndex && e.end == endIndex) {
-            entity = `U-${e.tag.name}`
-          } else if (e.start == startIndex) {
-            entity = `B-${e.tag.name}`
-          } else if (e.end == endIndex) {
-            entity = `L-${e.tag.name}`
+          if (this.additionalTaggingType == this.additionalTaggingTypes[0]) {
+            entity = e.tag.name;
           } else {
-            entity = `I-${e.tag.name}`
+            if(e.start == startIndex && e.end == endIndex) {
+              entity = `${tagMap['U']}-${e.tag.name}`;
+            } else if (e.start == startIndex) {
+              entity = `${tagMap['B']}-${e.tag.name}`;
+            } else if (e.end == endIndex) {
+              entity = `${tagMap['L']}-${e.tag.name}`;
+            } else {
+              entity = `${tagMap['I']}-${e.tag.name}`;
+            }
           }
         }
 
