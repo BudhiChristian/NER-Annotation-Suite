@@ -1,8 +1,25 @@
 import { TagInfo } from 'src/app/domain/tag-info.domain'
+import { TaggedData } from 'src/app/domain/tagged-data.domain'
 
 export const positionalTagOptions = ['None', 'BILOU Tagging', 'BIOU Tagging', 'BIO Tagging', 'BIEOS Tagging']
 
-export function getPositionalTagMap(additionalTagginType: string) {
+export function matchTokenToTag(data: TaggedData, taggingType: string) {
+    let entities = [];
+    let startIndex = 0;
+    for(let token of data.sentence.split(' ')) {
+        let endIndex = startIndex + token.length;
+        let ents = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex);
+        console.log(ents)
+        entities.push({
+            token: token,
+            tag: getPositionalTagFormat(ents.length>0 && ents[0], startIndex, endIndex, taggingType)
+        })
+        startIndex += (token.length + 1)
+    }
+    return entities
+}
+
+function getPositionalTagMap(additionalTagginType: string) {
     switch (additionalTagginType) {
         case 'BIO Tagging':
             return {
@@ -47,7 +64,7 @@ export function getPositionalTagMap(additionalTagginType: string) {
     }
 }
 
-export function getPositionalTagFormat(entity: TagInfo, start: number, end: number, taggingType: string) {
+function getPositionalTagFormat(entity: TagInfo, start: number, end: number, taggingType: string) {
     let tagMap = getPositionalTagMap(taggingType)
     if (entity) {
         if (entity.start == start && entity.end == end) {

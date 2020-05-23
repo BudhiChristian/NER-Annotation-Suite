@@ -5,7 +5,7 @@ import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 import { Papa } from 'ngx-papaparse'
-import { positionalTagOptions, getPositionalTagFormat } from './export.utility';
+import { positionalTagOptions, getPositionalTagFormat, matchTokenToTag } from './export.utility';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -21,7 +21,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   appendToExisting: boolean = false;
   appendData: any;
   readonly additionalTaggingTypes: string[] = positionalTagOptions
-  additionalTaggingType:string = this.additionalTaggingTypes[0];
+  additionalTaggingType: string = this.additionalTaggingTypes[0];
 
   saveUntagged: boolean = true;
   readonly untaggedOutputTypes: string[] = ['txt'];
@@ -35,11 +35,11 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   ) {
     super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
   }
-  
+
   get canExport(): boolean {
     if (this.saveTagged) {
       return !this.appendToExisting || Boolean(this.appendData)
-    } 
+    }
     return this.saveUntagged
   }
 
@@ -124,7 +124,7 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   private getSpacyTagged() {
-    let output = this.annotatedService.finisedTagged.map(data =>{
+    let output = this.annotatedService.finisedTagged.map(data => {
       let entities = [];
       for (let entity of data.entities) {
         //TODO Process BILOU
@@ -155,29 +155,22 @@ export class ExportComponent extends VolatileComponent implements OnInit {
 
     const sentenceCount = output.filter(row => row[0]).length
     output.push(...this.getTokenSplit(sentenceCount))
-    
+
     return this.papa.unparse(output);
   }
 
   private getTokenSplit(numExisting): string[][] {
     let output: string[][] = [];
-
     this.annotatedService.finisedTagged.forEach((data, index) => {
-      let startIndex = 0;
-      for (let token of data.sentence.split(' ')) {
-        let endIndex = startIndex + token.length;
-        let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex)
-        let line = [
-          startIndex == 0 ? `Senetence: ${numExisting + index + 1}` : '',
-          token,
-          getPositionalTagFormat(entities.length > 0 && entities[0], startIndex, endIndex, this.additionalTaggingType)
+      let tokens = matchTokenToTag(data, this.additionalTaggingType).map((token: { token: string, tag: string }, t_index) => {
+        return [
+          t_index == 0 ? `Senetence: ${numExisting + index + 1}` : '',
+          token.token,
+          token.tag
         ]
-        output.push(line);
-        startIndex += (token.length + 1)
-      }
+      })
+      output.push(...tokens);
     })
     return output;
   }
-
-
 }
