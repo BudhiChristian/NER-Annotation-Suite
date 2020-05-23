@@ -14,6 +14,12 @@
         <mat-hint>{{numTagged}} Entries</mat-hint>
     </mat-form-field>
     <div class='append-container'> 
+        <mat-form-field>
+            <mat-label>Additional Positional Tagging</mat-label>
+            <mat-select [(value)]='additionalTaggingType' [disabled]='!saveTagged'>
+                <mat-option *ngFor='let opt of additionalTaggingTypes' [value]='opt'>{{opt}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-checkbox [checked]='appendToExisting' [disabled]='!saveTagged' (change)='appendToExisting = $event.checked' color='primary'>append to existing data</mat-checkbox>
         <app-choose-append *ngIf='appendToExisting' [disabled]='!saveTagged' [outputType]='taggedOutputType' (onValidate)='appendData = $event'></app-choose-append>
     </div>

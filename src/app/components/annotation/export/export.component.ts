@@ -5,6 +5,7 @@ import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 import { Papa } from 'ngx-papaparse'
+import { positionalTagOptions, matchTokenToTag } from './export.utility';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -19,6 +20,8 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   taggedOutputType: string = this.taggedOutputTypes[0];
   appendToExisting: boolean = false;
   appendData: any;
+  readonly additionalTaggingTypes: string[] = positionalTagOptions
+  additionalTaggingType: string = this.additionalTaggingTypes[0];
 
   saveUntagged: boolean = true;
   readonly untaggedOutputTypes: string[] = ['txt'];
@@ -32,11 +35,11 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   ) {
     super(__dialog, 'Session Warning', 'You are about to leave the session. Any work may be lost upon leaving. Do you wish to continue?')
   }
-  
+
   get canExport(): boolean {
     if (this.saveTagged) {
       return !this.appendToExisting || Boolean(this.appendData)
-    } 
+    }
     return this.saveUntagged
   }
 
@@ -121,15 +124,24 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   }
 
   private getSpacyTagged() {
-    let output = this.annotatedService.finisedTagged.map(data => ({
-      content: data.sentence,
-      entities: data.entities.map(entity => ({
-        text: entity.text,
-        label: entity.tag.name,
-        start: entity.start,
-        end: entity.end
-      }))
-    }))
+    let output = this.annotatedService.finisedTagged.map(data => {
+      let entities = [];
+      if (this.additionalTaggingType == this.additionalTaggingTypes[0]) {
+        entities = data.entities.map(entity => ({
+          text: entity.text,
+          label: entity.tag.name,
+          start: entity.start,
+          end: entity.end
+        }))
+      } else {
+        entities = matchTokenToTag(data, this.additionalTaggingType);
+      }
+
+      return {
+        content: data.sentence,
+        entities: entities
+      }
+    });
     if (this.appendToExisting && this.appendData) {
       this.appendData.push(...output);
       output = this.appendData;
@@ -145,28 +157,22 @@ export class ExportComponent extends VolatileComponent implements OnInit {
 
     const sentenceCount = output.filter(row => row[0]).length
     output.push(...this.getTokenSplit(sentenceCount))
-    
+
     return this.papa.unparse(output);
   }
 
   private getTokenSplit(numExisting): string[][] {
     let output: string[][] = [];
-
     this.annotatedService.finisedTagged.forEach((data, index) => {
-      let startIndex = 0;
-      for (let token of data.sentence.split(' ')) {
-        let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end > startIndex)
-        let line = [
-          startIndex == 0 ? `Senetence: ${numExisting + index + 1}` : '',
-          token,
-          (entities.length > 0) ? entities[0].tag.name : 'O'
+      let tokens = matchTokenToTag(data, this.additionalTaggingType).map((token, t_index) => {
+        return [
+          t_index == 0 ? `Senetence: ${numExisting + index + 1}` : '',
+          token.text,
+          token.label
         ]
-        output.push(line);
-        startIndex += (token.length + 1)
-      }
+      })
+      output.push(...tokens);
     })
     return output;
   }
-
-
 }
