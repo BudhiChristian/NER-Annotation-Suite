@@ -9,10 +9,12 @@ export function matchTokenToTag(data: TaggedData, taggingType: string) {
     for(let token of data.sentence.split(' ')) {
         let endIndex = startIndex + token.length;
         let ents = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex);
-        console.log(ents)
         entities.push({
-            token: token,
-            tag: getPositionalTagFormat(ents.length>0 && ents[0], startIndex, endIndex, taggingType)
+            id: entities.length,
+            text: token,
+            label: getPositionalTagFormat(ents.length>0 && ents[0], startIndex, endIndex, taggingType),
+            start: startIndex,
+            end: endIndex
         })
         startIndex += (token.length + 1)
     }

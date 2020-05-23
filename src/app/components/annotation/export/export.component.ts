@@ -5,7 +5,7 @@ import { VolatileComponent } from 'src/app/domain/volatile-component.domain';
 import { RouterStateSnapshot } from '@angular/router';
 import { UnsavedChange } from 'src/app/domain/unsaved-change.domain';
 import { Papa } from 'ngx-papaparse'
-import { positionalTagOptions, getPositionalTagFormat, matchTokenToTag } from './export.utility';
+import { positionalTagOptions, matchTokenToTag } from './export.utility';
 
 interface ExportInfo { data: any, filename: string, type: string }
 
@@ -126,18 +126,20 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   private getSpacyTagged() {
     let output = this.annotatedService.finisedTagged.map(data => {
       let entities = [];
-      for (let entity of data.entities) {
-        //TODO Process BILOU
-      }
-
-      return {
-        content: data.sentence,
-        entities: data.entities.map(entity => ({
+      if (this.additionalTaggingType == this.additionalTaggingTypes[0]) {
+        entities = data.entities.map(entity => ({
           text: entity.text,
           label: entity.tag.name,
           start: entity.start,
           end: entity.end
         }))
+      } else {
+        entities = matchTokenToTag(data, this.additionalTaggingType);
+      }
+
+      return {
+        content: data.sentence,
+        entities: entities
       }
     });
     if (this.appendToExisting && this.appendData) {
@@ -162,11 +164,11 @@ export class ExportComponent extends VolatileComponent implements OnInit {
   private getTokenSplit(numExisting): string[][] {
     let output: string[][] = [];
     this.annotatedService.finisedTagged.forEach((data, index) => {
-      let tokens = matchTokenToTag(data, this.additionalTaggingType).map((token: { token: string, tag: string }, t_index) => {
+      let tokens = matchTokenToTag(data, this.additionalTaggingType).map((token, t_index) => {
         return [
           t_index == 0 ? `Senetence: ${numExisting + index + 1}` : '',
-          token.token,
-          token.tag
+          token.text,
+          token.label
         ]
       })
       output.push(...tokens);

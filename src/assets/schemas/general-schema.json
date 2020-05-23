@@ -25,6 +25,9 @@
                         "end"
                     ],
                     "properties": {
+                        "id": {
+                            "type": "number"
+                        },
                         "label": {
                             "type": "string"
                         },

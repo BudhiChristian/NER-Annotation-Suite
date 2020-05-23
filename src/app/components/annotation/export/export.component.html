@@ -14,7 +14,7 @@
         <mat-hint>{{numTagged}} Entries</mat-hint>
     </mat-form-field>
     <div class='append-container'> 
-        <mat-form-field *ngIf='taggedOutputType == taggedOutputTypes[1]'>
+        <mat-form-field>
             <mat-label>Additional Positional Tagging</mat-label>
             <mat-select [(value)]='additionalTaggingType' [disabled]='!saveTagged'>
                 <mat-option *ngFor='let opt of additionalTaggingTypes' [value]='opt'>{{opt}}</mat-option>
