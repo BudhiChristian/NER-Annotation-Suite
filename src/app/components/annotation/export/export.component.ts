@@ -155,11 +155,27 @@ export class ExportComponent extends VolatileComponent implements OnInit {
     this.annotatedService.finisedTagged.forEach((data, index) => {
       let startIndex = 0;
       for (let token of data.sentence.split(' ')) {
-        let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end > startIndex)
+        let endIndex = startIndex + token.length;
+        let entities = data.entities.filter(entity => entity.start <= startIndex && entity.end >= endIndex)
+
+        let entity = 'O'
+        if (entities.length > 0) {
+          let e = entities[0]
+          if(e.start == startIndex && e.end == endIndex) {
+            entity = `U-${e.tag.name}`
+          } else if (e.start == startIndex) {
+            entity = `B-${e.tag.name}`
+          } else if (e.end == endIndex) {
+            entity = `L-${e.tag.name}`
+          } else {
+            entity = `I-${e.tag.name}`
+          }
+        }
+
         let line = [
           startIndex == 0 ? `Senetence: ${numExisting + index + 1}` : '',
           token,
-          (entities.length > 0) ? entities[0].tag.name : 'O'
+          entity
         ]
         output.push(line);
         startIndex += (token.length + 1)
